@@ -1,0 +1,5 @@
+.idea
+./resources/dbfs/*
+./resources/img/*
+./resources/icons/*
+__pycache__/

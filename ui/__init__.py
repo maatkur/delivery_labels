@@ -1,0 +1,2 @@
+from ui.ui_labels_login.ui_labels_login import Ui_MainWindow as LoginWindow
+from ui.ui_labels_printer.ui_labels_printer import Ui_MainWindow as LabelPrinterWindow
