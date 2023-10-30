@@ -7,3 +7,5 @@ class OrdersRepository(Repository):
         self.table_name = "orders"
         super().__init__(self.table_name)
 
+    def update_orders(self) -> None:
+        pass

@@ -90,6 +90,9 @@ class Ui_MainWindow(object):
         self.order_entry.setFont(font)
         self.order_entry.setStyleSheet(u"background-color: rgb(255, 255, 255);\n"
 "border-radius: 10px")
+        self.order_entry.setInputMethodHints(Qt.ImhNone)
+        self.order_entry.setMaxLength(10)
+        self.order_entry.setFrame(False)
         self.order_entry.setAlignment(Qt.AlignCenter)
 
         self.horizontalLayout_3.addWidget(self.order_entry)
@@ -135,11 +138,23 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_3.addItem(self.horizontalSpacer)
 
+        self.label_6 = QLabel(self.frame_4)
+        self.label_6.setObjectName(u"label_6")
+        self.label_6.setMaximumSize(QSize(25, 25))
+        font1 = QFont()
+        font1.setPointSize(9)
+        self.label_6.setFont(font1)
+        self.label_6.setPixmap(QPixmap(u"../resources/icons/do-utilizador.ico"))
+        self.label_6.setScaledContents(True)
+        self.label_6.setAlignment(Qt.AlignCenter)
+
+        self.horizontalLayout_3.addWidget(self.label_6)
+
         self.logged_user_label = QLabel(self.frame_4)
         self.logged_user_label.setObjectName(u"logged_user_label")
-        font1 = QFont()
-        font1.setBold(True)
-        self.logged_user_label.setFont(font1)
+        font2 = QFont()
+        font2.setBold(True)
+        self.logged_user_label.setFont(font2)
         self.logged_user_label.setStyleSheet(u"font-size: 13px;")
 
         self.horizontalLayout_3.addWidget(self.logged_user_label)
@@ -238,30 +253,30 @@ class Ui_MainWindow(object):
         self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
         self.label = QLabel(self.frame_2)
         self.label.setObjectName(u"label")
-        self.label.setMinimumSize(QSize(0, 21))
+        self.label.setMinimumSize(QSize(0, 27))
         self.label.setFont(font)
         self.label.setStyleSheet(u"")
 
         self.horizontalLayout_4.addWidget(self.label)
 
-        self.lineEdit_2 = QLineEdit(self.frame_2)
-        self.lineEdit_2.setObjectName(u"lineEdit_2")
+        self.customer_field = QLineEdit(self.frame_2)
+        self.customer_field.setObjectName(u"customer_field")
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.lineEdit_2.sizePolicy().hasHeightForWidth())
-        self.lineEdit_2.setSizePolicy(sizePolicy)
-        self.lineEdit_2.setMinimumSize(QSize(0, 23))
-        self.lineEdit_2.setMaximumSize(QSize(16777215, 23))
-        self.lineEdit_2.setFont(font1)
-        self.lineEdit_2.setStyleSheet(u"background-color: rgb( 228, 60, 47);\n"
+        sizePolicy.setHeightForWidth(self.customer_field.sizePolicy().hasHeightForWidth())
+        self.customer_field.setSizePolicy(sizePolicy)
+        self.customer_field.setMinimumSize(QSize(0, 25))
+        self.customer_field.setMaximumSize(QSize(16777215, 23))
+        self.customer_field.setFont(font2)
+        self.customer_field.setStyleSheet(u"background-color: rgb( 228, 60, 47);\n"
 "border: 2px solid rgb( 228, 60, 47);\n"
 "border-radius: 10px;\n"
 "font-size: 13px;")
-        self.lineEdit_2.setReadOnly(True)
-        self.lineEdit_2.setClearButtonEnabled(True)
+        self.customer_field.setReadOnly(True)
+        self.customer_field.setClearButtonEnabled(False)
 
-        self.horizontalLayout_4.addWidget(self.lineEdit_2)
+        self.horizontalLayout_4.addWidget(self.customer_field)
 
 
         self.verticalLayout_3.addWidget(self.frame_2)
@@ -279,36 +294,39 @@ class Ui_MainWindow(object):
         self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
         self.label_2 = QLabel(self.frame_5)
         self.label_2.setObjectName(u"label_2")
+        self.label_2.setMinimumSize(QSize(0, 27))
         self.label_2.setFont(font)
 
         self.horizontalLayout_5.addWidget(self.label_2)
 
-        self.lineEdit_4 = QLineEdit(self.frame_5)
-        self.lineEdit_4.setObjectName(u"lineEdit_4")
-        self.lineEdit_4.setMinimumSize(QSize(0, 23))
-        self.lineEdit_4.setFont(font1)
-        self.lineEdit_4.setStyleSheet(u"font-size: 13px;")
-        self.lineEdit_4.setReadOnly(True)
-        self.lineEdit_4.setClearButtonEnabled(True)
+        self.service_store_field = QLineEdit(self.frame_5)
+        self.service_store_field.setObjectName(u"service_store_field")
+        self.service_store_field.setMinimumSize(QSize(0, 25))
+        self.service_store_field.setFont(font2)
+        self.service_store_field.setStyleSheet(u"font-size: 13px;")
+        self.service_store_field.setReadOnly(True)
+        self.service_store_field.setClearButtonEnabled(False)
 
-        self.horizontalLayout_5.addWidget(self.lineEdit_4)
+        self.horizontalLayout_5.addWidget(self.service_store_field)
 
         self.label_3 = QLabel(self.frame_5)
         self.label_3.setObjectName(u"label_3")
-        self.label_3.setFont(font)
+        self.label_3.setMinimumSize(QSize(0, 27))
+        self.label_3.setFont(font2)
+        self.label_3.setStyleSheet(u"font-size: 13px;")
 
         self.horizontalLayout_5.addWidget(self.label_3)
 
-        self.lineEdit_3 = QLineEdit(self.frame_5)
-        self.lineEdit_3.setObjectName(u"lineEdit_3")
-        self.lineEdit_3.setMinimumSize(QSize(0, 23))
-        self.lineEdit_3.setFont(font1)
-        self.lineEdit_3.setStyleSheet(u"font-size: 13px;")
-        self.lineEdit_3.setAlignment(Qt.AlignCenter)
-        self.lineEdit_3.setReadOnly(True)
-        self.lineEdit_3.setClearButtonEnabled(True)
+        self.label_date_field = QLineEdit(self.frame_5)
+        self.label_date_field.setObjectName(u"label_date_field")
+        self.label_date_field.setMinimumSize(QSize(0, 25))
+        self.label_date_field.setFont(font2)
+        self.label_date_field.setStyleSheet(u"font-size: 13px;")
+        self.label_date_field.setAlignment(Qt.AlignCenter)
+        self.label_date_field.setReadOnly(True)
+        self.label_date_field.setClearButtonEnabled(False)
 
-        self.horizontalLayout_5.addWidget(self.lineEdit_3)
+        self.horizontalLayout_5.addWidget(self.label_date_field)
 
 
         self.verticalLayout_3.addWidget(self.frame_5)
@@ -326,26 +344,73 @@ class Ui_MainWindow(object):
         self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
         self.label_4 = QLabel(self.frame_6)
         self.label_4.setObjectName(u"label_4")
+        self.label_4.setMinimumSize(QSize(0, 27))
         self.label_4.setFont(font)
 
         self.horizontalLayout_6.addWidget(self.label_4)
 
-        self.lineEdit_5 = QLineEdit(self.frame_6)
-        self.lineEdit_5.setObjectName(u"lineEdit_5")
-        self.lineEdit_5.setMinimumSize(QSize(0, 23))
-        self.lineEdit_5.setMaximumSize(QSize(50, 50))
-        self.lineEdit_5.setFont(font1)
-        self.lineEdit_5.setStyleSheet(u"font-size: 13px;\n"
+        self.checker_field = QLineEdit(self.frame_6)
+        self.checker_field.setObjectName(u"checker_field")
+        self.checker_field.setMinimumSize(QSize(0, 25))
+        self.checker_field.setMaximumSize(QSize(50, 50))
+        self.checker_field.setFont(font2)
+        self.checker_field.setStyleSheet(u"font-size: 13px;\n"
 "color: black;")
-        self.lineEdit_5.setAlignment(Qt.AlignCenter)
-        self.lineEdit_5.setReadOnly(True)
-        self.lineEdit_5.setClearButtonEnabled(True)
+        self.checker_field.setAlignment(Qt.AlignCenter)
+        self.checker_field.setReadOnly(True)
+        self.checker_field.setClearButtonEnabled(False)
 
-        self.horizontalLayout_6.addWidget(self.lineEdit_5)
+        self.horizontalLayout_6.addWidget(self.checker_field)
 
         self.horizontalSpacer_4 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
         self.horizontalLayout_6.addItem(self.horizontalSpacer_4)
+
+        self.label_5 = QLabel(self.frame_6)
+        self.label_5.setObjectName(u"label_5")
+        self.label_5.setMinimumSize(QSize(0, 27))
+        self.label_5.setFont(font)
+
+        self.horizontalLayout_6.addWidget(self.label_5)
+
+        self.decrement_button = QPushButton(self.frame_6)
+        self.decrement_button.setObjectName(u"decrement_button")
+        self.decrement_button.setMinimumSize(QSize(0, 25))
+        icon8 = QIcon()
+        icon8.addFile(u"../resources/icons/subtrair.ico", QSize(), QIcon.Normal, QIcon.Off)
+        self.decrement_button.setIcon(icon8)
+        self.decrement_button.setIconSize(QSize(25, 25))
+        self.decrement_button.setFlat(True)
+
+        self.horizontalLayout_6.addWidget(self.decrement_button)
+
+        self.label_quantity_display = QLineEdit(self.frame_6)
+        self.label_quantity_display.setObjectName(u"label_quantity_display")
+        self.label_quantity_display.setMinimumSize(QSize(0, 25))
+        self.label_quantity_display.setMaximumSize(QSize(50, 50))
+        self.label_quantity_display.setFont(font2)
+        self.label_quantity_display.setStyleSheet(u"font-size: 13px;\n"
+"color: black;")
+        self.label_quantity_display.setMaxLength(2)
+        self.label_quantity_display.setAlignment(Qt.AlignCenter)
+        self.label_quantity_display.setReadOnly(True)
+
+        self.horizontalLayout_6.addWidget(self.label_quantity_display)
+
+        self.increment_button = QPushButton(self.frame_6)
+        self.increment_button.setObjectName(u"increment_button")
+        self.increment_button.setMinimumSize(QSize(0, 25))
+        icon9 = QIcon()
+        icon9.addFile(u"../resources/icons/adicionar.ico", QSize(), QIcon.Normal, QIcon.Off)
+        self.increment_button.setIcon(icon9)
+        self.increment_button.setIconSize(QSize(25, 25))
+        self.increment_button.setFlat(True)
+
+        self.horizontalLayout_6.addWidget(self.increment_button)
+
+        self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_6.addItem(self.horizontalSpacer_2)
 
 
         self.verticalLayout_3.addWidget(self.frame_6)
@@ -358,12 +423,12 @@ class Ui_MainWindow(object):
         self.frame_7.setFrameShadow(QFrame.Raised)
         self.horizontalLayout_7 = QHBoxLayout(self.frame_7)
         self.horizontalLayout_7.setObjectName(u"horizontalLayout_7")
-        self.label_quantity_label = QLabel(self.frame_7)
-        self.label_quantity_label.setObjectName(u"label_quantity_label")
-        self.label_quantity_label.setFont(font)
-        self.label_quantity_label.setAlignment(Qt.AlignCenter)
+        self.quantity_label = QLabel(self.frame_7)
+        self.quantity_label.setObjectName(u"quantity_label")
+        self.quantity_label.setFont(font)
+        self.quantity_label.setAlignment(Qt.AlignCenter)
 
-        self.horizontalLayout_7.addWidget(self.label_quantity_label)
+        self.horizontalLayout_7.addWidget(self.quantity_label)
 
 
         self.verticalLayout_3.addWidget(self.frame_7)
@@ -384,22 +449,34 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Etiquetas | Impress\u00e3o", None))
         self.menu_button.setText("")
+        self.order_entry.setInputMask(QCoreApplication.translate("MainWindow", u"9999999999", None))
         self.order_entry.setPlaceholderText(QCoreApplication.translate("MainWindow", u"PEDIDO", None))
         self.search_button.setText("")
         self.clear_button.setText("")
         self.print_button.setText("")
-        self.logged_user_label.setText("")
+        self.label_6.setText("")
+        self.logged_user_label.setText(QCoreApplication.translate("MainWindow", u"15 - EZEQUIEL", None))
         self.users_menu_button.setText("")
         self.reports_button.setText("")
         self.update_orders_button.setText("")
         self.label.setText(QCoreApplication.translate("MainWindow", u"CLIENTE:", None))
-        self.lineEdit_2.setText("")
+        self.customer_field.setText("")
         self.label_2.setText(QCoreApplication.translate("MainWindow", u"ATENDIMENTO:", None))
-        self.lineEdit_4.setText("")
-        self.label_3.setText(QCoreApplication.translate("MainWindow", u"EMISS\u00c3O DA ETIQUETA", None))
-        self.lineEdit_3.setText("")
+        self.service_store_field.setText("")
+        self.label_3.setText(QCoreApplication.translate("MainWindow", u"EMISS\u00c3O DA ETIQUETA:", None))
+        self.label_date_field.setText("")
         self.label_4.setText(QCoreApplication.translate("MainWindow", u"SEPARADOR:", None))
-        self.lineEdit_5.setText("")
-        self.label_quantity_label.setText(QCoreApplication.translate("MainWindow", u"ETIQUETA \u00daNICA", None))
+        self.checker_field.setText("")
+        self.label_5.setText(QCoreApplication.translate("MainWindow", u"VOLUMES:", None))
+        self.decrement_button.setText("")
+#if QT_CONFIG(shortcut)
+        self.decrement_button.setShortcut(QCoreApplication.translate("MainWindow", u"_, -", None))
+#endif // QT_CONFIG(shortcut)
+        self.label_quantity_display.setText(QCoreApplication.translate("MainWindow", u"1", None))
+        self.increment_button.setText("")
+#if QT_CONFIG(shortcut)
+        self.increment_button.setShortcut(QCoreApplication.translate("MainWindow", u"+, =", None))
+#endif // QT_CONFIG(shortcut)
+        self.quantity_label.setText(QCoreApplication.translate("MainWindow", u"VOLUME \u00daNICO", None))
     # retranslateUi
 
