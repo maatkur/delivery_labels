@@ -2,12 +2,24 @@ from os import system, remove, getenv
 
 
 class FileHelper:
+    users_file = "vendedor.dbf"
+    orders_file = "pedidos.dbf"
 
     @staticmethod
-    def copy(file):
-        system(fr"copy {getenv('DBF_PATH')}\{file} {getenv('DBF_DESTINY_PATH')}\{file}")
-        print(fr"copy {getenv('DBF_PATH')}\{file} {getenv('DBF_DESTINY_PATH')}\{file}")
+    def copy_users_file():
+        system(
+            fr"copy {getenv('DBF_PATH')}\{FileHelper.users_file} {getenv('DBF_DESTINY_PATH')}\{FileHelper.users_file}")
 
     @staticmethod
-    def delete(file):
-        remove(fr".\resources\dbfs\{file}")
+    def delete_users_file():
+        remove(fr".\resources\dbfs\{FileHelper.users_file}")
+
+    @staticmethod
+    def copy_orders_file():
+        print(fr"{getenv('DBF_PATH')}\{FileHelper.orders_file} {getenv('DBF_DESTINY_PATH')}\{FileHelper.orders_file}")
+        system(
+            fr"copy {getenv('DBF_PATH')}\{FileHelper.orders_file} {getenv('DBF_DESTINY_PATH')}\{FileHelper.orders_file}")
+
+    @staticmethod
+    def delete_orders_file():
+        remove(fr".\resources\dbfs\{FileHelper.orders_file}")

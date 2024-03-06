@@ -1,14 +1,16 @@
 import os
 import sqlite3
 
+from helpers import dict_helpers
 
-class Repository:
+
+class RepositoryConfig:
     def __init__(self, table_name):
         self._database = os.getenv("DATABASE")
         self.table_name = table_name
         self._connection = None
         self._cursor = None
-        if type(self) is Repository:
+        if type(self) is RepositoryConfig:
             raise NotImplemented("Repository class cannot be started directly, you must use it as inheritance")
 
     def _connect(self) -> None:
@@ -23,7 +25,7 @@ class Repository:
         self._cursor.close()
         self._connection.close()
 
-    def _execute_and_commit(self, command, values=None) -> None:
+    def execute_and_commit(self, command, values=None) -> None:
         # Executa uma consulta que altera dados no banco de dados e realiza um commit.
         try:
             self._connect()
@@ -44,15 +46,25 @@ class Repository:
         placeholders = ", ".join(
             ["?"] * len(data))  # Cria uma string com a mesma quantidade de placeholders que os valores
 
-        command = f"INSERT INTO {self.table_name} ({keys}) VALUES ({placeholders})"
+        command = f"INSERT OR REPLACE INTO {self.table_name} ({keys}) VALUES ({placeholders})"
         values = tuple(data.values())  # Cria uma tupla com os valores do dicionário
 
-        self._execute_and_commit(command, values)
+        self.execute_and_commit(command, values)
 
-    def _search_and_fetch(self, command, values=()) -> list:
+    def search_and_fetch(self, command, values=()) -> list:
         # Executa uma busca e retorna o resultado em uma lista de tuplas
         self._connect()
         self._cursor.execute(command, values)
         result = self._cursor.fetchall()
         self._disconnect()
         return result
+
+    def get_all(self, options: dict) -> list:
+        options = dict_helpers.dict_merge({"select": "*"}, options)
+        command = f"SELECT"
+        command += f" {options['select']} FROM {self.table_name} "
+        if options.get('query'):
+            query = dict_helpers.dict_to_query(options['query'])
+            command += query
+
+        return self.search_and_fetch(command)

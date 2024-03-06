@@ -5,13 +5,13 @@ from dbfread import DBF
 class DbfRepository:
 
     def __init__(self, file) -> None:
-        self.file = fr"./resources/dbfs/{file}"
+        self.file = fr"C:\Users\mathe\PycharmProjects\delivery_labels\resources\dbfs\{file}"
 
-        if type(self) == DbfRepository:
+        if type(self) is DbfRepository:
             raise NotImplementedError("DbfRepository class cannot be started directly, you must use it as inheritance")
 
     def _load(self) -> DBF:
         if path.exists(self.file):
-            return DBF(fr"{self.file}", encoding="cp437", load=True)
+            return DBF(fr"{self.file}", encoding="cp437", load=False)
         else:
             raise FileNotFoundError(f'Arquivo "{self.file}" não encontrado!')

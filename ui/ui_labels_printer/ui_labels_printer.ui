@@ -501,7 +501,7 @@ border-radius: 10px</string>
            </widget>
           </item>
           <item alignment="Qt::AlignHCenter">
-           <widget class="QPushButton" name="update_orders_button">
+           <widget class="QPushButton" name="layout_options_button">
             <property name="maximumSize">
              <size>
               <width>30</width>

@@ -15,3 +15,13 @@ class DialogWindow:
         self.message_box.setStandardButtons(QMessageBox.Ok)
         self.message_box.exec()
 
+    def search_error(self) -> None:
+        title = "Ops!"
+        message = "Pedido inválido ou ainda não atualizado! \nExecute a atualização de pedidos."
+
+        self.message_box.setIcon(QMessageBox.Warning)
+        self.message_box.setWindowTitle(title)
+        self.message_box.setText(message)
+        self.message_box.setStandardButtons(QMessageBox.Ok)
+        self.message_box.exec()
+

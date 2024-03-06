@@ -1,12 +1,12 @@
 from models.user_model import User
 
 
-class UserManagement:
+class LoggedUserHelper:
 
     _logged_user = None
 
     @staticmethod
     def logged_user():
-        if UserManagement._logged_user is None:
-            UserManagement._logged_user = User()
-        return UserManagement._logged_user
+        if LoggedUserHelper._logged_user is None:
+            LoggedUserHelper._logged_user = User()
+        return LoggedUserHelper._logged_user

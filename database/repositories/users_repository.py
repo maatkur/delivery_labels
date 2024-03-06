@@ -1,7 +1,7 @@
-from database.repositories.repository import Repository
+from database.repositories.repository_config import RepositoryConfig
 
 
-class UsersRepository(Repository):
+class UsersRepository(RepositoryConfig):
 
     def __init__(self):
         self.table_name = "users"
@@ -10,7 +10,7 @@ class UsersRepository(Repository):
     def get_user_credential(self, user_code) -> list or None:
 
         command = f"""SELECT * FROM users WHERE code = {user_code}"""
-        result = self._search_and_fetch(command)
+        result = self.search_and_fetch(command)
 
         if result:
             (
@@ -18,14 +18,12 @@ class UsersRepository(Repository):
                 name,
                 password,
                 store,
-                admin
             ) = result[0]
             return {
                 "code": code,
                 "name": name,
                 "password": password,
                 "store": store,
-                "admin": admin
             }
         else:
             return
@@ -38,5 +36,5 @@ class UsersRepository(Repository):
 
         values = list(user.values())
 
-        self._execute_and_commit(command, values)
+        self.execute_and_commit(command, values)
 

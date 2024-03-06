@@ -25,7 +25,6 @@ def upgrade() -> None:
         sa.Column("name", sa.String(length=50), nullable=False),
         sa.Column("password", sa.String(length=60), nullable=False),
         sa.Column("store", sa.String(length=3), nullable=True),
-        sa.Column("admin", sa.BOOLEAN, nullable=True),
     )
 
 

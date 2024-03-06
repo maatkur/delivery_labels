@@ -16,7 +16,7 @@ class UsersDbfRepository(DbfRepository):
                     "code": user["CODIGO"].strip(),
                     "name": user["NOME"].strip(),
                     "password": str(user["SENHA"]),
-                    "store": user["EMPRESA"]
+                    "store": str(user["EMPRESA"])
                 }
             )
         return processed_users
