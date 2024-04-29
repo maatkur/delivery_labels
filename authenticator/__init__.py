@@ -1,1 +1,1 @@
-from authenticator.authenticator import Authenticator
+from .authenticator import Authenticator

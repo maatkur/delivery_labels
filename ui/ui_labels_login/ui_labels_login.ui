@@ -14,8 +14,8 @@
    <string>Etiquetas | Login</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>../../resources/icons/barcode.ico</normaloff>../../resources/icons/barcode.ico</iconset>
+   <iconset resource="../../resources/icons/icons.qrc">
+    <normaloff>:/newPrefix/barcode.ico</normaloff>:/newPrefix/barcode.ico</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(34, 34, 34);</string>
@@ -321,7 +321,9 @@ QPushButton:hover{
    </layout>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../resources/icons/icons.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>password_entry</sender>

@@ -17,7 +17,7 @@ class DialogWindow:
 
     def search_error(self) -> None:
         title = "Ops!"
-        message = "Pedido inválido ou ainda não atualizado! \nExecute a atualização de pedidos."
+        message = "Pedido inválido!!!"
 
         self.message_box.setIcon(QMessageBox.Warning)
         self.message_box.setWindowTitle(title)
@@ -25,3 +25,45 @@ class DialogWindow:
         self.message_box.setStandardButtons(QMessageBox.Ok)
         self.message_box.exec()
 
+    def confirmation(self) -> bool:
+        title = "CONFIRMAR?"
+        message = "INICIAR ATUALIZAÇÃO DE USUÁRIOS?"
+
+        self.message_box.setIcon(QMessageBox.Warning)
+        self.message_box.setWindowTitle(title)
+        self.message_box.setText(message)
+        self.message_box.setStandardButtons(QMessageBox.Yes | QMessageBox.Cancel)
+        self.message_box.setDefaultButton(QMessageBox.Cancel)
+        result = self.message_box.exec()
+
+        return result
+
+    def start_users_update(self) -> None:
+        title = "INICIANDO ATUALIZAÇÃO DE USUÁRIOS!"
+        message = "CLIQUE EM 'OK' E AGUARDE A MENSAGEM DE CONCLUSÃO PARA CONTINUAR!!!"
+
+        self.message_box.setIcon(QMessageBox.Warning)
+        self.message_box.setWindowTitle(title)
+        self.message_box.setText(message)
+        self.message_box.setStandardButtons(QMessageBox.Ok)
+        self.message_box.exec()
+
+    def finish_users_update(self) -> None:
+        title = "Aviso!"
+        message = "Atualização de usuários concluída!!!"
+
+        self.message_box.setIcon(QMessageBox.Warning)
+        self.message_box.setWindowTitle(title)
+        self.message_box.setText(message)
+        self.message_box.setStandardButtons(QMessageBox.Ok)
+        self.message_box.exec()
+
+    def already_printed(self) -> None:
+        title = "Ops!"
+        message = "Essa etiqueta já foi impressa!"
+
+        self.message_box.setIcon(QMessageBox.Warning)
+        self.message_box.setWindowTitle(title)
+        self.message_box.setText(message)
+        self.message_box.setStandardButtons(QMessageBox.Ok)
+        self.message_box.exec()

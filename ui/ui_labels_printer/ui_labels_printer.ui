@@ -23,8 +23,8 @@
    <string>Etiquetas | Impressão</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>../../resources/icons/barcode.ico</normaloff>../../resources/icons/barcode.ico</iconset>
+   <iconset resource="../../resources/icons/icons.qrc">
+    <normaloff>:/newPrefix/barcode.ico</normaloff>:/newPrefix/barcode.ico</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="styleSheet">
@@ -142,8 +142,8 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
-              <normaloff>../../resources/icons/menu-aberto.ico</normaloff>../../resources/icons/menu-aberto.ico</iconset>
+             <iconset resource="../../resources/icons/icons.qrc">
+              <normaloff>:/newPrefix/menu.ico</normaloff>:/newPrefix/menu.ico</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -217,6 +217,9 @@ border-radius: 10px</string>
           </item>
           <item alignment="Qt::AlignTop">
            <widget class="QPushButton" name="search_button">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -236,8 +239,8 @@ border-radius: 10px</string>
              <string/>
             </property>
             <property name="icon">
-             <iconset>
-              <normaloff>../../resources/icons/procurar.ico</normaloff>../../resources/icons/procurar.ico</iconset>
+             <iconset resource="../../resources/icons/icons.qrc">
+              <normaloff>:/newPrefix/procurar.ico</normaloff>:/newPrefix/procurar.ico</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -252,6 +255,9 @@ border-radius: 10px</string>
           </item>
           <item>
            <widget class="QPushButton" name="clear_button">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -268,8 +274,8 @@ border-radius: 10px</string>
              <string/>
             </property>
             <property name="icon">
-             <iconset>
-              <normaloff>../../resources/icons/borracha.ico</normaloff>../../resources/icons/borracha.ico</iconset>
+             <iconset resource="../../resources/icons/icons.qrc">
+              <normaloff>:/newPrefix/apagar.ico</normaloff>:/newPrefix/apagar.ico</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -284,6 +290,9 @@ border-radius: 10px</string>
           </item>
           <item>
            <widget class="QPushButton" name="print_button">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -300,8 +309,8 @@ border-radius: 10px</string>
              <string/>
             </property>
             <property name="icon">
-             <iconset>
-              <normaloff>../../resources/icons/imprimir.ico</normaloff>../../resources/icons/imprimir.ico</iconset>
+             <iconset resource="../../resources/icons/icons.qrc">
+              <normaloff>:/newPrefix/imprimir.ico</normaloff>:/newPrefix/imprimir.ico</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -344,7 +353,7 @@ border-radius: 10px</string>
              <string/>
             </property>
             <property name="pixmap">
-             <pixmap>../../resources/icons/do-utilizador.ico</pixmap>
+             <pixmap resource="../../resources/icons/icons.qrc">:/newPrefix/avatar.ico</pixmap>
             </property>
             <property name="scaledContents">
              <bool>true</bool>
@@ -460,8 +469,8 @@ border-radius: 10px</string>
              <string/>
             </property>
             <property name="icon">
-             <iconset>
-              <normaloff>../../resources/icons/silhueta-de-multiplos-usuarios.ico</normaloff>../../resources/icons/silhueta-de-multiplos-usuarios.ico</iconset>
+             <iconset resource="../../resources/icons/icons.qrc">
+              <normaloff>:/newPrefix/usuarios.ico</normaloff>:/newPrefix/usuarios.ico</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -486,8 +495,8 @@ border-radius: 10px</string>
              <string/>
             </property>
             <property name="icon">
-             <iconset>
-              <normaloff>../../resources/icons/numero-de-rastreio.ico</normaloff>../../resources/icons/numero-de-rastreio.ico</iconset>
+             <iconset resource="../../resources/icons/icons.qrc">
+              <normaloff>:/newPrefix/numero-de-rastreio.ico</normaloff>:/newPrefix/numero-de-rastreio.ico</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -515,8 +524,8 @@ border-radius: 10px</string>
              <string/>
             </property>
             <property name="icon">
-             <iconset>
-              <normaloff>../../resources/icons/processamento-de-dados.ico</normaloff>../../resources/icons/processamento-de-dados.ico</iconset>
+             <iconset resource="../../resources/icons/icons.qrc">
+              <normaloff>:/newPrefix/atualiza_doc.ico</normaloff>:/newPrefix/atualiza_doc.ico</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -565,9 +574,6 @@ border-radius: 10px;
            <number>0</number>
           </property>
           <property name="rightMargin">
-           <number>0</number>
-          </property>
-          <property name="bottomMargin">
            <number>0</number>
           </property>
           <item>
@@ -892,8 +898,8 @@ color: black;</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset>
-                 <normaloff>../../resources/icons/subtrair.ico</normaloff>../../resources/icons/subtrair.ico</iconset>
+                <iconset resource="../../resources/icons/icons.qrc">
+                 <normaloff>:/newPrefix/subtrair.ico</normaloff>:/newPrefix/subtrair.ico</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -959,8 +965,8 @@ color: black;</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset>
-                 <normaloff>../../resources/icons/adicionar.ico</normaloff>../../resources/icons/adicionar.ico</iconset>
+                <iconset resource="../../resources/icons/icons.qrc">
+                 <normaloff>:/newPrefix/adicionar.ico</normaloff>:/newPrefix/adicionar.ico</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -993,11 +999,158 @@ color: black;</string>
            </widget>
           </item>
           <item>
+           <widget class="QFrame" name="reprint_frame">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_8">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <spacer name="horizontalSpacer_3">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_7">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>27</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>REIMPRESSÃO POR:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="reasons_combo_box">
+               <property name="minimumSize">
+                <size>
+                 <width>250</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb( 57, 123, 201);
+border: 2px solid rgb( 57, 123, 201);
+border-radius: 10px;</string>
+               </property>
+               <item>
+                <property name="text">
+                 <string>Selecione</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Falha na impressora</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Impressora sem etiqueta</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Impressora sem tinta (Ribbon)</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Número de volumes incorreto</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Etiqueta perdida</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Etiqueta danificada</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Impresso anteriormente por engano</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Pedido anteriormente cancelado</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_5">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
            <widget class="QFrame" name="frame_7">
             <property name="minimumSize">
              <size>
               <width>0</width>
               <height>40</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>20</height>
              </size>
             </property>
             <property name="styleSheet">
@@ -1010,8 +1163,29 @@ color: black;</string>
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_7">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
              <item>
               <widget class="QLabel" name="quantity_label">
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>20</height>
+                </size>
+               </property>
                <property name="font">
                 <font>
                  <pointsize>11</pointsize>
@@ -1038,6 +1212,8 @@ color: black;</string>
    </layout>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../resources/icons/icons.qrc"/>
+ </resources>
  <connections/>
 </ui>

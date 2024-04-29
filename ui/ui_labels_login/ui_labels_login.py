@@ -18,6 +18,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QFrame, QGridLayout, QHBoxLayout,
     QLabel, QLineEdit, QMainWindow, QPushButton,
     QSizePolicy, QSpacerItem, QVBoxLayout, QWidget)
+from resources.icons import icons
+from helpers.path_helper import PathHelper
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -25,7 +27,7 @@ class Ui_MainWindow(object):
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(407, 353)
         icon = QIcon()
-        icon.addFile(u"../resources/icons/barcode.ico", QSize(), QIcon.Normal, QIcon.Off)
+        icon.addFile(u":/newPrefix/barcode.ico", QSize(), QIcon.Normal, QIcon.Off)
         MainWindow.setWindowIcon(icon)
         MainWindow.setStyleSheet(u"background-color: rgb(34, 34, 34);")
         self.centralwidget = QWidget(MainWindow)
@@ -46,7 +48,7 @@ class Ui_MainWindow(object):
 
         self.label = QLabel(self.frame)
         self.label.setObjectName(u"label")
-        self.label.setPixmap(QPixmap(u"../resources/img/black_and_white_logo_only.png"))
+        self.label.setPixmap(QPixmap(f"{PathHelper.resolve()}resources/img/black_and_white_logo_only.png"))
 
         self.horizontalLayout.addWidget(self.label)
 

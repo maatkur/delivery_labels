@@ -1,0 +1,50 @@
+ ZPL                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            CT~~CD,~CC^~CT~
+                        ^XA
+                        ~TA000
+                        ~JSN
+                        ^LT0
+                        ^MNW
+                        ^MTT
+                        ^PON
+                        ^PMN
+                        ^LH0,0
+                        ^JMA
+                        ^PR4,4
+                        ~SD15
+                        ^JUS
+                        ^LRN
+                        ^CI27
+                        ^PA0,1,1,0
+                        ^XZ
+                        ^XA
+                        ^MMT
+                        ^PW799
+                        ^LL480
+                        ^LS0
+                        ^FO7,9^GB785,467,8^FS
+                        ^FO19,35^GFA,649,1536,16,:Z64:eJzFVL9r20AYPeEedIoW3WhCt07t2kFY1qAxYMF9W/V/GDr0wGT2lL+hf0YTEpPNdcC3K2jI1h90cajR1+/0404nKOlQmieM+Px4753encTYf8HJaBajOSn9GXbeOMGDNwcgvTlEVJ59AXPPHtELAICFZ494HMxca7337b0AQfphgKEHKwygoOu9Z49YO3toMFydgV0h6Aa2gpa2AUErtxWEHd+vcNrE0zX37G0A9OgqePO1g1fR3yPEU+N+2+eLQpj4rG8o6fnOX0DT34BfG35teW361+f68g88NAVyX19bfkrWVD93z39t+FOnT83DC6cvTbuJy9/RDtDP5h/M+UGnJ63xsPojbcHK8YXkJt7xSOc3HOiBibkY6LF8qdz+CHP4AmrA5mOt3uJQ38Lpvf19av+f0gvdocsfn69nwrvRLEfz6/b2YvQ3hoePKmbJ92V4Xyl6ebiEuWQiX4g8o5cJ1zWWNUt+HJPHB+I3N9FiJ1kU7KN8o9ik2s6WxM8mdfzK6NNMwiJjIpVRQPpJ9eWI5TeVVNs4MPr0TBZpxqbZWcdvZx+uUc0+YavPsihPgUUcoj7/V4UqDvHz4wN9IzTf53dXlxHnF3cb+gjV4WH5c1XGJ6v1fVWzf43fQU90Tg==:DCF6
+                        ^FO10,131^GB777,0,8^FS
+                        ^FO142,16^GB0,120,8^FS
+                        ^FT0,104^A0N,73,74^FB747,1,19,C^FH\^CI28^FD{order}^FS^CI27
+                        ^FO605,9^GB0,131,8^FS
+                        ^FT591,105^A0N,56,38^FB208,1,14,C^FH\^CI28^FDVol. {current_label}/{target_label}^FS^CI27
+                        ^FT19,201^A0N,56,56^FH\^CI28^FDCLIENTE:^FS^CI27
+                        ^FO9,222^GB778,0,8^FS
+                        ^FT233,205^A0N,56,30^FH\^CI28^FD{client}^FS^CI27
+                        ^FT19,269^A0N,39,38^FH\^CI28^FDAtendimento: {store}^FS^CI27
+                        ^FT19,328^A0N,39,38^FH\^CI28^FDSeparador: {checker}^FS^CI27
+                        ^FO545,230^GFA,2809,7584,32,:Z64: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:C64E
+                        ^FO537,227^GB0,240,8^FS
+                        ^FO12,284^GB531,0,8^FS
+                        ^FO14,343^GB528,0,8^FS
+                        ^FT278,331^A0N,39,38^FH\^CI28^FDDEM {date}^FS^CI27
+                        ^FO264,288^GB0,60,8^FS
+                        ^FT0,379^A0N,28,28^FB557,1,7,C^FH\^CI28^FDMais sobre nossa loja no QRCODE:^FS^CI27
+                        ^FO31,401^GFA,353,488,8,:Z64:eJx1kTFOxDAQRb+JkCUofATfJOYSlIhrpIiy1p6EEuUQrBEX4AbrktKliyTDzNjbIFE9PY39ZzwG1nV9j8A9Ee1PQGBSBk7CDYOADhjan1+uBHsAuKNoCxM+uSx02SehzSEKh+wFxpRRy191Vn52z+IGLhWOu1R1Q5tNdZGOZ7Bboohpgzt4HHaffMa0IERXxANMkTrPVsU5cROvQnbm3P344yM7X/63fvS8ueVD8xfpwx4wqHtY7R9+Ljqf2ymB53cyt76HgIlvkyRw2it35Doe3prLgspHYx27B+VQ/I2xLczpfl1yVRii3eX4qf8PRUPtv6DkQ174DTzK90X8Au6avww=:B1C5
+                        ^FO115,401^GFA,281,488,8,:Z64:eJyFjrENgzAQRc+ykFEoXKVDYg0XEbAEyhqULlK4ZJQoWcKjMAKllcY534EwpMiXrNPT9/378CK5IpJA85ybIek+t1OJqsIDSKPlacZ1hhMvGRdDTz7GJRYx+uTLz5tYeeGTrx0QNyDIb0EQ18D+DWBn9I3kPKM4z+iNe2Dm+0ZRv9LoKfHVKuyzQBf4fxPSfoD2eaE+NXA+npM7B2J/8h2zhDXPrXk5b/ePfX77Ibs/fsb2yKPh/YBtrAKxdDHi/TgrnPh8xey+foSMfg==:B777
+                        ^FO188,394^GFA,233,912,12,:Z64:eJzN0jEOgzAMBdDQDEhdGDtyhB4hR4ObwRE4AkdgjKooru3YwqhEZcRD9PTlRBjZuZvVG6jySB7YsCF9IWR0KwZ0p8YLvXp2LqjXugf1Vjdcy1PY89SZvN0dH8b8WOmPPLP083Cae9NPp+Y0hfbT1L95PObm/aby/svkk+k33+xP5sIzT3/+4anXo8MF9+rZeKzvQyNMtEviD1kuL+Qns+zbDeoLcw+7lA==:B182
+                        ^FO278,398^GFA,233,780,12,:Z64:eJy9kkEKwjAQRSNdzDJH8CjdCL2AB3Hh3pynG49gjxLoAewySPDbdOjMuAgVEQcCn8fjk4Tpe57gnLuAp2SYbPmD9WvJJ7cMlZw4N4Y3Fb7hB+W7QX1Kyk1OPivnzL6v+Ybb/k/vf5T+dkRY+/cjhrW/vSMKBybxgWS5+M+b8vk94s9H+ERZ/Oiz8EjqR3rj//Ppy37+2x/vj+bzYZmu5No+W/4CQTjnqw==:230D
+                        ^FO365,398^GFA,241,504,8,:Z64:eJytkTEOwjAMRT/qUIklI2OOEm7mHoURwSV6lN6AblQosvlOjFQx18vXy7ec7+T8aHVL1motXbfQ2sVUQo/kOr7VT7bhpVLFZiRysYkqNRtwUaspeCSP9AeqMzKQyUgTioqCVTitK/3OumcJlugnczrgeabgJXgGTp6OOux5CV4Zp6VnvLYP4zhzcAlfyHrnOGv3n3x/2qntf2W793+eR77vn9b4R83Bv3/+Aq2obkw=:BAE0
+                        ^FO443,394^GFA,421,804,12,:Z64:eJx1kj1OxDAQhR1cjETjCiHR+AjcAHMLrkKBhI+DuATuuIbLiMrNStEq7DB+40kioY20s09f7Jf5c+7qc/O563veNfNikphX04/MnIdOvy9c7Pic7cIkLjQu+Iv+YNMkvKsOVcKXGsViQSyzvRxHSTUsvH4A1lNDXA6xTf3vDSfnUOwWVSobr/B+Ai+x64h0Smr2deFt4zl174is3D8eMgB8gnLVypEDocQcDpwO2rddoybCt7Jfd46Kh79j96pcQJKqRj4uzZyj5u/iiYvxIPNKWq9MxnjtA86jD9Jqtv7IhC/at57NtCpHhz/ccug8oj9EJdTMx+Y4Iep8laPNzoPoPlBd+p6A0/e+P7J51aXF9Olu7JsUte1hYHkzFjecPfNZtRQa+Vn1Q3a3P3r86vMHbbCVug==:EA02
+                        ^PQ1,0,1,Y
+                        ^XZ

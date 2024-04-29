@@ -15,9 +15,10 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QFrame, QHBoxLayout, QLabel,
-    QLineEdit, QMainWindow, QPushButton, QSizePolicy,
-    QSpacerItem, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QComboBox, QFrame, QHBoxLayout,
+    QLabel, QLineEdit, QMainWindow, QPushButton,
+    QSizePolicy, QSpacerItem, QVBoxLayout, QWidget)
+from resources.icons import icons
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -27,7 +28,7 @@ class Ui_MainWindow(object):
         MainWindow.resize(600, 200)
         MainWindow.setMinimumSize(QSize(600, 200))
         icon = QIcon()
-        icon.addFile(u"../resources/icons/barcode.ico", QSize(), QIcon.Normal, QIcon.Off)
+        icon.addFile(u":/newPrefix/barcode.ico", QSize(), QIcon.Normal, QIcon.Off)
         MainWindow.setWindowIcon(icon)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
@@ -63,7 +64,7 @@ class Ui_MainWindow(object):
         self.menu_button.setMinimumSize(QSize(25, 25))
         self.menu_button.setMaximumSize(QSize(25, 25))
         icon1 = QIcon()
-        icon1.addFile(u"../resources/icons/menu-aberto.ico", QSize(), QIcon.Normal, QIcon.Off)
+        icon1.addFile(u":/newPrefix/menu.ico", QSize(), QIcon.Normal, QIcon.Off)
         self.menu_button.setIcon(icon1)
         self.menu_button.setIconSize(QSize(25, 25))
         self.menu_button.setFlat(True)
@@ -99,11 +100,12 @@ class Ui_MainWindow(object):
 
         self.search_button = QPushButton(self.frame_4)
         self.search_button.setObjectName(u"search_button")
+        self.search_button.setEnabled(False)
         self.search_button.setMinimumSize(QSize(0, 25))
         self.search_button.setMaximumSize(QSize(30, 30))
         self.search_button.setStyleSheet(u"background-color: rgb(57, 123, 201);")
         icon2 = QIcon()
-        icon2.addFile(u"../resources/icons/procurar.ico", QSize(), QIcon.Normal, QIcon.Off)
+        icon2.addFile(u":/newPrefix/procurar.ico", QSize(), QIcon.Normal, QIcon.Off)
         self.search_button.setIcon(icon2)
         self.search_button.setIconSize(QSize(25, 25))
         self.search_button.setFlat(True)
@@ -112,10 +114,11 @@ class Ui_MainWindow(object):
 
         self.clear_button = QPushButton(self.frame_4)
         self.clear_button.setObjectName(u"clear_button")
+        self.clear_button.setEnabled(False)
         self.clear_button.setMinimumSize(QSize(0, 25))
         self.clear_button.setMaximumSize(QSize(30, 30))
         icon3 = QIcon()
-        icon3.addFile(u"../resources/icons/borracha.ico", QSize(), QIcon.Normal, QIcon.Off)
+        icon3.addFile(u":/newPrefix/apagar.ico", QSize(), QIcon.Normal, QIcon.Off)
         self.clear_button.setIcon(icon3)
         self.clear_button.setIconSize(QSize(25, 25))
         self.clear_button.setFlat(True)
@@ -124,10 +127,11 @@ class Ui_MainWindow(object):
 
         self.print_button = QPushButton(self.frame_4)
         self.print_button.setObjectName(u"print_button")
+        self.print_button.setEnabled(False)
         self.print_button.setMinimumSize(QSize(0, 25))
         self.print_button.setMaximumSize(QSize(30, 30))
         icon4 = QIcon()
-        icon4.addFile(u"../resources/icons/imprimir.ico", QSize(), QIcon.Normal, QIcon.Off)
+        icon4.addFile(u":/newPrefix/imprimir.ico", QSize(), QIcon.Normal, QIcon.Off)
         self.print_button.setIcon(icon4)
         self.print_button.setIconSize(QSize(25, 25))
         self.print_button.setFlat(True)
@@ -144,7 +148,7 @@ class Ui_MainWindow(object):
         font1 = QFont()
         font1.setPointSize(9)
         self.label_6.setFont(font1)
-        self.label_6.setPixmap(QPixmap(u"../resources/icons/do-utilizador.ico"))
+        self.label_6.setPixmap(QPixmap(u":/newPrefix/avatar.ico"))
         self.label_6.setScaledContents(True)
         self.label_6.setAlignment(Qt.AlignCenter)
 
@@ -190,7 +194,7 @@ class Ui_MainWindow(object):
         self.users_menu_button.setObjectName(u"users_menu_button")
         self.users_menu_button.setMaximumSize(QSize(30, 30))
         icon5 = QIcon()
-        icon5.addFile(u"../resources/icons/silhueta-de-multiplos-usuarios.ico", QSize(), QIcon.Normal, QIcon.Off)
+        icon5.addFile(u":/newPrefix/usuarios.ico", QSize(), QIcon.Normal, QIcon.Off)
         self.users_menu_button.setIcon(icon5)
         self.users_menu_button.setIconSize(QSize(25, 25))
         self.users_menu_button.setFlat(True)
@@ -201,7 +205,7 @@ class Ui_MainWindow(object):
         self.reports_button.setObjectName(u"reports_button")
         self.reports_button.setMaximumSize(QSize(30, 30))
         icon6 = QIcon()
-        icon6.addFile(u"../resources/icons/numero-de-rastreio.ico", QSize(), QIcon.Normal, QIcon.Off)
+        icon6.addFile(u":/newPrefix/numero-de-rastreio.ico", QSize(), QIcon.Normal, QIcon.Off)
         self.reports_button.setIcon(icon6)
         self.reports_button.setIconSize(QSize(25, 25))
         self.reports_button.setFlat(True)
@@ -213,7 +217,7 @@ class Ui_MainWindow(object):
         self.layout_options_button.setMaximumSize(QSize(30, 30))
         self.layout_options_button.setLayoutDirection(Qt.LeftToRight)
         icon7 = QIcon()
-        icon7.addFile(u"../resources/icons/processamento-de-dados.ico", QSize(), QIcon.Normal, QIcon.Off)
+        icon7.addFile(u":/newPrefix/atualiza_doc.ico", QSize(), QIcon.Normal, QIcon.Off)
         self.layout_options_button.setIcon(icon7)
         self.layout_options_button.setIconSize(QSize(25, 25))
         self.layout_options_button.setFlat(True)
@@ -242,7 +246,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_3 = QVBoxLayout(self.frame_3)
         self.verticalLayout_3.setSpacing(0)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
-        self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_3.setContentsMargins(0, 0, 0, -1)
         self.frame_2 = QFrame(self.frame_3)
         self.frame_2.setObjectName(u"frame_2")
         self.frame_2.setMinimumSize(QSize(0, 40))
@@ -377,7 +381,7 @@ class Ui_MainWindow(object):
         self.decrement_button.setObjectName(u"decrement_button")
         self.decrement_button.setMinimumSize(QSize(0, 25))
         icon8 = QIcon()
-        icon8.addFile(u"../resources/icons/subtrair.ico", QSize(), QIcon.Normal, QIcon.Off)
+        icon8.addFile(u":/newPrefix/subtrair.ico", QSize(), QIcon.Normal, QIcon.Off)
         self.decrement_button.setIcon(icon8)
         self.decrement_button.setIconSize(QSize(25, 25))
         self.decrement_button.setFlat(True)
@@ -401,7 +405,7 @@ class Ui_MainWindow(object):
         self.increment_button.setObjectName(u"increment_button")
         self.increment_button.setMinimumSize(QSize(0, 25))
         icon9 = QIcon()
-        icon9.addFile(u"../resources/icons/adicionar.ico", QSize(), QIcon.Normal, QIcon.Off)
+        icon9.addFile(u":/newPrefix/adicionar.ico", QSize(), QIcon.Normal, QIcon.Off)
         self.increment_button.setIcon(icon9)
         self.increment_button.setIconSize(QSize(25, 25))
         self.increment_button.setFlat(True)
@@ -415,16 +419,66 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_3.addWidget(self.frame_6)
 
+        self.reprint_frame = QFrame(self.frame_3)
+        self.reprint_frame.setObjectName(u"reprint_frame")
+        self.reprint_frame.setMinimumSize(QSize(0, 0))
+        self.reprint_frame.setMaximumSize(QSize(16777215, 0))
+        self.reprint_frame.setFrameShape(QFrame.StyledPanel)
+        self.reprint_frame.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_8 = QHBoxLayout(self.reprint_frame)
+        self.horizontalLayout_8.setSpacing(0)
+        self.horizontalLayout_8.setObjectName(u"horizontalLayout_8")
+        self.horizontalLayout_8.setContentsMargins(0, 0, 0, -1)
+        self.horizontalSpacer_3 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_8.addItem(self.horizontalSpacer_3)
+
+        self.label_7 = QLabel(self.reprint_frame)
+        self.label_7.setObjectName(u"label_7")
+        self.label_7.setMinimumSize(QSize(0, 27))
+        self.label_7.setFont(font)
+
+        self.horizontalLayout_8.addWidget(self.label_7)
+
+        self.reasons_combo_box = QComboBox(self.reprint_frame)
+        self.reasons_combo_box.addItem("")
+        self.reasons_combo_box.addItem("")
+        self.reasons_combo_box.addItem("")
+        self.reasons_combo_box.addItem("")
+        self.reasons_combo_box.addItem("")
+        self.reasons_combo_box.addItem("")
+        self.reasons_combo_box.addItem("")
+        self.reasons_combo_box.addItem("")
+        self.reasons_combo_box.addItem("")
+        self.reasons_combo_box.setObjectName(u"reasons_combo_box")
+        self.reasons_combo_box.setMinimumSize(QSize(250, 0))
+        self.reasons_combo_box.setStyleSheet(u"background-color: rgb( 57, 123, 201);\n"
+"border: 2px solid rgb( 57, 123, 201);\n"
+"border-radius: 10px;")
+
+        self.horizontalLayout_8.addWidget(self.reasons_combo_box)
+
+        self.horizontalSpacer_5 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_8.addItem(self.horizontalSpacer_5)
+
+
+        self.verticalLayout_3.addWidget(self.reprint_frame)
+
         self.frame_7 = QFrame(self.frame_3)
         self.frame_7.setObjectName(u"frame_7")
         self.frame_7.setMinimumSize(QSize(0, 40))
+        self.frame_7.setMaximumSize(QSize(16777215, 20))
         self.frame_7.setStyleSheet(u"")
         self.frame_7.setFrameShape(QFrame.StyledPanel)
         self.frame_7.setFrameShadow(QFrame.Raised)
         self.horizontalLayout_7 = QHBoxLayout(self.frame_7)
+        self.horizontalLayout_7.setSpacing(0)
         self.horizontalLayout_7.setObjectName(u"horizontalLayout_7")
+        self.horizontalLayout_7.setContentsMargins(0, 0, 0, 0)
         self.quantity_label = QLabel(self.frame_7)
         self.quantity_label.setObjectName(u"quantity_label")
+        self.quantity_label.setMaximumSize(QSize(16777215, 20))
         self.quantity_label.setFont(font)
         self.quantity_label.setAlignment(Qt.AlignCenter)
 
@@ -477,6 +531,17 @@ class Ui_MainWindow(object):
 #if QT_CONFIG(shortcut)
         self.increment_button.setShortcut(QCoreApplication.translate("MainWindow", u"+, =", None))
 #endif // QT_CONFIG(shortcut)
+        self.label_7.setText(QCoreApplication.translate("MainWindow", u"REIMPRESS\u00c3O POR:", None))
+        self.reasons_combo_box.setItemText(0, QCoreApplication.translate("MainWindow", u"Selecione", None))
+        self.reasons_combo_box.setItemText(1, QCoreApplication.translate("MainWindow", u"Falha na impressora", None))
+        self.reasons_combo_box.setItemText(2, QCoreApplication.translate("MainWindow", u"Impressora sem etiqueta", None))
+        self.reasons_combo_box.setItemText(3, QCoreApplication.translate("MainWindow", u"Impressora sem tinta (Ribbon)", None))
+        self.reasons_combo_box.setItemText(4, QCoreApplication.translate("MainWindow", u"N\u00famero de volumes incorreto", None))
+        self.reasons_combo_box.setItemText(5, QCoreApplication.translate("MainWindow", u"Etiqueta perdida", None))
+        self.reasons_combo_box.setItemText(6, QCoreApplication.translate("MainWindow", u"Etiqueta danificada", None))
+        self.reasons_combo_box.setItemText(7, QCoreApplication.translate("MainWindow", u"Impresso anteriormente por engano", None))
+        self.reasons_combo_box.setItemText(8, QCoreApplication.translate("MainWindow", u"Pedido anteriormente cancelado", None))
+
         self.quantity_label.setText(QCoreApplication.translate("MainWindow", u"VOLUME \u00daNICO", None))
     # retranslateUi
 

@@ -1,0 +1,18 @@
+<RCC>
+  <qresource prefix="newPrefix">
+    <file>adicionar.ico</file>
+    <file>apagar.ico</file>
+    <file>atualiza_doc.ico</file>
+    <file>atualiza_usuario.ico</file>
+    <file>avatar.ico</file>
+    <file>barcode.ico</file>
+    <file>filtro.ico</file>
+    <file>imprimir.ico</file>
+    <file>menu.ico</file>
+    <file>numero-de-rastreio.ico</file>
+    <file>procurar.ico</file>
+    <file>sair.ico</file>
+    <file>subtrair.ico</file>
+    <file>usuarios.ico</file>
+  </qresource>
+</RCC>

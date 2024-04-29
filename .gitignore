@@ -8,6 +8,7 @@ __pycache__/
 
 # Distribution / packaging
 .Python
+output/
 build/
 develop-eggs/
 dist/
@@ -97,4 +98,4 @@ cython_debug/
 # Project ignores
 ./resources/dbfs/*
 ./resources/img/*
-
+tests

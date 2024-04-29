@@ -59,7 +59,7 @@ class RepositoryConfig:
         self._disconnect()
         return result
 
-    def get_all(self, options: dict) -> list:
+    def select(self, options: dict) -> list:
         options = dict_helpers.dict_merge({"select": "*"}, options)
         command = f"SELECT"
         command += f" {options['select']} FROM {self.table_name} "

@@ -4,7 +4,7 @@ from PySide6.QtWidgets import QWidget
 class WidgetHelper:
 
     @staticmethod
-    def install_event_filters(window, widgets) -> None:
+    def install_event_filters(window, widgets: list) -> None:
         for widget in widgets:
             widget.installEventFilter(window)
 

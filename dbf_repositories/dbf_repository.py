@@ -5,7 +5,7 @@ from dbfread import DBF
 class DbfRepository:
 
     def __init__(self, file) -> None:
-        self.file = fr"C:\Users\mathe\PycharmProjects\delivery_labels\resources\dbfs\{file}"
+        self.file = fr"C:\Users\mathe\PycharmProjects\delivery_labels\tmp\{file}"
 
         if type(self) is DbfRepository:
             raise NotImplementedError("DbfRepository class cannot be started directly, you must use it as inheritance")

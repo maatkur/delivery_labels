@@ -7,12 +7,12 @@ class UsersPermissionsRepository(RepositoryConfig):
         self.table_name = "users_permissions"
         super().__init__(self.table_name)
 
-    def retrieve_user_permissions(self, user_code:str) -> dict:
+    def retrieve_user_permissions(self, user_code: str) -> dict:
 
         options = {"select": "admin, reprint, report_access",
                    "query": {"code": user_code}}
 
-        user_permission = self.get_all(options)
+        user_permission = self.select(options)
 
         if user_permission:
             (
@@ -31,7 +31,6 @@ class UsersPermissionsRepository(RepositoryConfig):
 
         command = """SELECT users.code, 
                             users.name, 
-                            users_permissions.admin, 
                             users_permissions.reprint , 
                             users_permissions.report_access  
                     FROM users
@@ -50,5 +49,3 @@ class UsersPermissionsRepository(RepositoryConfig):
                     """
 
         self.execute_and_commit(command)
-
-    # def get_u

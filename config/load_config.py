@@ -3,8 +3,8 @@ import os
 from dotenv import load_dotenv
 
 
-def load_config():
-    app_env = os.environ.get("APP_ENV", "prod")
+def load_config(app_env):
+    # app_env = os.environ.get("APP_ENV", "dev")
     if app_env == "dev":
         load_dotenv("development.env")
     elif app_env == "prod":

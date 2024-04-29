@@ -1,13 +1,12 @@
 from PySide6 import QtCore
 from PySide6.QtWidgets import *
-from ui import LoginWindow
-from views.labels_printer_view import LabelsPrinterView
-
-from helpers import WidgetHelper, LoggedUserHelper
-from components import DialogWindowManager
+from dotenv import load_dotenv
 
 from authenticator.authenticator import Authenticator
-from dotenv import load_dotenv
+from components import DialogWindowManager
+from helpers import WidgetHelper, LoggedUserHelper
+from ui import LoginWindow
+from views.labels_printer_view import LabelsPrinterView
 
 load_dotenv(r'C:\Users\mathe\PycharmProjects\delivery_labels\config\development.env')
 
@@ -66,7 +65,7 @@ class LabelsLoginView(QMainWindow):
             if self.labels_printer_window is None:
                 self.labels_printer_window = LabelsPrinterView()
                 self.labels_printer_window.show()
-            window.close()
+            self.close()
         else:
             self.clear_fields()
             DialogWindowManager.dialog().login_error()
