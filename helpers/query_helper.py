@@ -38,9 +38,10 @@ class QueryHelper:
     def is_valid_response(query_data: dict) -> bool:
         """
         Verifica se a resposta é válida com base no conteúdo do JSON.
-        Retorna True se o valor de 'nome' for diferente de 'NAO LOCALIZADO'.
+        Retorna True se o valor de 'nome' for diferente de 'NAO LOCALIZADO' e não contiver 'CONSUMIDOR'.
         """
-        return query_data.get("nome") != "NAO LOCALIZADO"
+        nome = query_data.get("nome", "").upper()  # Garantir que o valor de nome seja sempre uma string
+        return nome != "NAO LOCALIZADO" and "CONSUMIDOR" not in nome
 
     @staticmethod
     def manage_response() -> Union[dict, bool]:

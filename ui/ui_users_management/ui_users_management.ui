@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Gerenciamento de usuários</string>
+   <string>Etiquetas | Gerenciamento de permissões</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../../resources/icons/icons.qrc">
@@ -150,13 +150,13 @@ color: black;</string>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="update_users_button">
+        <widget class="QPushButton" name="add_user_button">
          <property name="text">
           <string/>
          </property>
          <property name="icon">
           <iconset resource="../../resources/icons/icons.qrc">
-           <normaloff>:/newPrefix/atualiza_usuario.ico</normaloff>:/newPrefix/atualiza_usuario.ico</iconset>
+           <normaloff>:/newPrefix/add_user</normaloff>:/newPrefix/add_user</iconset>
          </property>
          <property name="iconSize">
           <size>

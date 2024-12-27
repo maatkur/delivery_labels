@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="newPrefix">
+    <file>add_user</file>
     <file>adicionar.ico</file>
     <file>apagar.ico</file>
     <file>barcode_logo</file>

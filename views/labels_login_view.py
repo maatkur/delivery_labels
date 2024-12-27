@@ -57,7 +57,7 @@ class LabelsLoginView(QMainWindow):
         }
         try:
             authenticated_user = Authenticator.authenticate(user)
-            if authenticated_user:
+            if authenticated_user["status"] == "success":
                 # Usando a instância singleton do SessionHelper
                 session = SessionHelper()
                 session.set("user", authenticated_user)

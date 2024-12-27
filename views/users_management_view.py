@@ -1,13 +1,11 @@
 from PySide6 import QtCore
+from PySide6.QtCore import Qt
 from PySide6.QtWidgets import *
-from dotenv import load_dotenv
-
-from ui import UsersManagementWindow
+from functools import partial
 
 from database.repositories.repository_manager import RepositoryManager
-from components.dialog_window.dialog_window_manager import DialogWindowManager
-
-load_dotenv(r'C:\Users\mathe\PycharmProjects\delivery_labels\config\development.env')
+from helpers import WidgetHelper
+from ui import UsersManagementWindow
 
 
 class UsersManagementView(QMainWindow):
@@ -23,6 +21,8 @@ class UsersManagementView(QMainWindow):
         WidgetHelper.install_event_filters(self,
                                            [self.ui.user_code_entry]
                                            )
+        self.retrieve_permissions()
+        print(self.users_permissions)
 
     def eventFilter(self, widget, event) -> bool:
         if event.type() == QtCore.QEvent.KeyPress:
@@ -41,10 +41,10 @@ class UsersManagementView(QMainWindow):
         self.ui.clear_button.clicked.connect(self.handle_clear_button)
         self.ui.clear_button.clicked.connect(self.retrieve_and_load)
         self.ui.search_button.clicked.connect(self.filter_and_load)
-        self.ui.update_users_button.clicked.connect(self.handle_users_update_button)
+        self.ui.add_user_button.clicked.connect(None) #TODO Alterar para a função de adicionar usuário
 
     def retrieve_permissions(self) -> None:
-        self.users_permissions = RepositoryManager.users_permissions_repository().get_all_permissions()
+        self.users_permissions = RepositoryManager.users_permissions_repository().get_all_users_with_permissions()
 
     def retrieve_and_load(self) -> None:
         self.retrieve_permissions()
@@ -53,48 +53,68 @@ class UsersManagementView(QMainWindow):
 
             self.load_table(self.users_permissions)
 
+    from functools import partial
+
     def load_table(self, users_permissions: list) -> None:
+        # Limpar entrada e tabela
         WidgetHelper.clear_widget(self.ui.user_code_entry)
         WidgetHelper.clear_table(self.ui.tableWidget)
 
-        # Definir o número de linhas e colunas
+        # Mapear permissões para colunas
+        permission_columns = {
+            "REPRINT LABELS": 2,  # Coluna para Reimpressão
+            "REPORT": 3  # Coluna para Relatórios
+        }
+
+        # Definir número de linhas e colunas
         self.ui.tableWidget.setRowCount(len(users_permissions))
-        self.ui.tableWidget.setColumnCount(len(users_permissions[0]))
+        self.ui.tableWidget.setColumnCount(4)  # Código, Nome, Reimpressão, Relatórios
 
-        # Preencher os users_permissions
-        for row, row_data in enumerate(users_permissions):
-            for col, value in enumerate(row_data):
-                item = QTableWidgetItem(str(value))
+        for row, user_data in enumerate(users_permissions):
+            # Configurar Código e Nome
+            for col, value in enumerate([str(user_data['user_id']), user_data['user_name']]):
+                item = QTableWidgetItem(value)
+                item.setTextAlignment(QtCore.Qt.AlignCenter)  # Centralizar o texto
+                self.ui.tableWidget.setItem(row, col, item)
 
-                # Defina o item da célula da tabela
-                self.ui.tableWidget.setItem(row, col, item)  # Define o item na tabela
+            # Adicionar permissões às colunas corretas
+            for permission, col in permission_columns.items():
+                # Verificar se a permissão está na lista de permissões do usuário
+                has_permission = permission in user_data['permissions']
 
-                if col == 2 or col == 3:
-                    checkbox = QCheckBox()
+                # Criar checkbox para indicar o estado da permissão
+                checkbox = QCheckBox()
+                checkbox.setChecked(has_permission)
 
-                    checkbox.setChecked(value)  # Define o estado da caixa de seleção com base no valor
+                # Conectar o evento de mudança de estado usando partial
+                checkbox.stateChanged.connect(
+                    partial(self.handle_checkbox_state_changed, row, col)
+                )
 
-                    checkbox.stateChanged.connect(
-                        lambda state, row=row, col=col: self.handle_checkbox_state_changed(row, col, state))
+                # Criar layout e adicionar checkbox com alinhamento central
+                layout = QHBoxLayout()
+                layout.addWidget(checkbox)
+                layout.setAlignment(QtCore.Qt.AlignCenter)  # Centralizar o checkbox
 
-                    # Crie um layout horizontal para alinhar a caixa de seleção
-                    layout = QHBoxLayout()
-                    layout.addWidget(checkbox)
+                cell_widget = QWidget()
+                cell_widget.setLayout(layout)
 
-                    # Adicione o layout (contendo a caixa de seleção) à célula da tabela
-                    cell_widget = QWidget()
-                    cell_widget.setLayout(layout)
-                    self.ui.tableWidget.setCellWidget(row, col, cell_widget)
+                # Adicionar o widget da célula à tabela
+                self.ui.tableWidget.setCellWidget(row, col, cell_widget)
+
         self.adjust_table_header()
 
     def filter_user(self) -> None:
-        user_code = self.ui.user_code_entry.text()
+        # Obter o código do usuário da entrada
+        user_code = self.ui.user_code_entry.text().strip()
 
+        # Atualizar as permissões do banco de dados
         self.retrieve_permissions()
 
-        filtered = list(filter(lambda x: str(x[0]) == user_code, self.users_permissions))
-
-        self.filtered_user_permission = filtered
+        # Filtrar as permissões com base no código do usuário
+        self.filtered_user_permission = [
+            user for user in self.users_permissions if str(user['user_id']) == user_code
+        ]
 
     def filter_and_load(self) -> None:
         self.filter_user()
@@ -102,18 +122,42 @@ class UsersManagementView(QMainWindow):
 
     def handle_checkbox_state_changed(self, row, col, state) -> None:
 
-        translate = {
-            2: "reprint",
-            3: "report_access"
+        # Tradução do índice da coluna para o nome da permissão
+        permission_map = {
+            2: "REPRINT LABELS",  # Coluna Reimpressão
+            3: "REPORT"  # Coluna Relatórios
         }
 
-        options = {
-            "permission": translate[col],
-            "value": 1 if state == 2 else 0,
-            "code": self.ui.tableWidget.item(row, 0).text()
-        }
+        # Obter o código do usuário e a permissão correspondente
+        user_id = int(self.ui.tableWidget.item(row, 0).text())
+        permission = permission_map.get(col)
 
-        RepositoryManager.users_permissions_repository().update_user_permission(options)
+        if not permission:
+            return  # Nenhuma permissão correspondente à coluna
+
+        # Determinar se a permissão deve ser adicionada ou removida
+        add_permission = state == Qt.CheckState.Checked.Checked.value  # Qt.Checked indica que o checkbox foi marcado
+
+        # Obter permissões atuais do usuário
+        repo = RepositoryManager.users_permissions_repository()
+        current_permissions = repo.get_user_permissions(user_id)
+
+        # Atualizar lista de permissões
+        if add_permission and permission not in current_permissions:
+            current_permissions.append(permission)  # Adicionar permissão
+        elif not add_permission and permission in current_permissions:
+            current_permissions.remove(permission)  # Remover permissão
+
+        # Atualizar permissões no banco de dados
+        permission_ids = [
+            repo.get_permission_id_by_name(perm) for perm in current_permissions
+        ]
+        success = repo.update_user_permissions(user_id, permission_ids)
+
+        if success:
+            print(f"Permissões atualizadas com sucesso para o usuário {user_id}: {current_permissions}")
+        else:
+            print(f"Erro ao atualizar permissões para o usuário {user_id}")
 
     def enable_search_button(self) -> None:
         self.ui.search_button.setDisabled(False)
@@ -133,16 +177,10 @@ class UsersManagementView(QMainWindow):
         WidgetHelper.clear_widget(self.ui.user_code_entry)
         WidgetHelper.clear_table(self.ui.tableWidget)
 
-    def handle_users_update_button(self) -> None:
-        result = DialogWindowManager.dialog().confirmation()
-        if result == QMessageBox.Yes:
-            UserUpdateHelper.update_users()
-            self.retrieve_and_load()
-
     def adjust_table_header(self) -> None:
 
-        self.ui.tableWidget.horizontalHeader().resizeSection(0, 10)
-        self.ui.tableWidget.horizontalHeader().resizeSection(1, 170)
+        self.ui.tableWidget.horizontalHeader().resizeSection(0, 100)
+        self.ui.tableWidget.horizontalHeader().resizeSection(1, 120)
         self.ui.tableWidget.horizontalHeader().resizeSection(2, 98)
         self.ui.tableWidget.horizontalHeader().resizeSection(3, 79)
 

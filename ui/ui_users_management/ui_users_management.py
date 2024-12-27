@@ -87,15 +87,15 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout.addWidget(self.clear_button)
 
-        self.update_users_button = QPushButton(self.top_frame)
-        self.update_users_button.setObjectName(u"update_users_button")
+        self.add_user_button = QPushButton(self.top_frame)
+        self.add_user_button.setObjectName(u"add_user_button")
         icon3 = QIcon()
-        icon3.addFile(u":/newPrefix/atualiza_usuario.ico", QSize(), QIcon.Normal, QIcon.Off)
-        self.update_users_button.setIcon(icon3)
-        self.update_users_button.setIconSize(QSize(25, 25))
-        self.update_users_button.setFlat(True)
+        icon3.addFile(u":/newPrefix/add_user", QSize(), QIcon.Normal, QIcon.Off)
+        self.add_user_button.setIcon(icon3)
+        self.add_user_button.setIconSize(QSize(25, 25))
+        self.add_user_button.setFlat(True)
 
-        self.horizontalLayout.addWidget(self.update_users_button)
+        self.horizontalLayout.addWidget(self.add_user_button)
 
         self.horizontalSpacer_2 = QSpacerItem(123, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
@@ -154,12 +154,12 @@ class Ui_MainWindow(object):
     # setupUi
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Gerenciamento de usu\u00e1rios", None))
+        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Etiquetas | Gerenciamento de permiss\u00f5es", None))
         self.user_code_entry.setInputMask(QCoreApplication.translate("MainWindow", u"999", None))
         self.user_code_entry.setPlaceholderText(QCoreApplication.translate("MainWindow", u"C\u00f3d.", None))
         self.search_button.setText("")
         self.clear_button.setText("")
-        self.update_users_button.setText("")
+        self.add_user_button.setText("")
         ___qtablewidgetitem = self.tableWidget.horizontalHeaderItem(0)
         ___qtablewidgetitem.setText(QCoreApplication.translate("MainWindow", u"C\u00f3digo", None));
         ___qtablewidgetitem1 = self.tableWidget.horizontalHeaderItem(1)
