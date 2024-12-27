@@ -42,6 +42,7 @@ class LabelsPrinterView(QMainWindow):
             self.ui.decrement_button
         ]
                                            )
+        print(self.user)
 
     def connect_widgets_actions(self) -> None:
         self.ui.customer_field.textChanged.connect(self.manage_print_button)

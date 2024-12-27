@@ -2,6 +2,7 @@
   <qresource prefix="newPrefix">
     <file>adicionar.ico</file>
     <file>apagar.ico</file>
+    <file>barcode_logo</file>
     <file>atualiza_doc.ico</file>
     <file>atualiza_usuario.ico</file>
     <file>avatar.ico</file>

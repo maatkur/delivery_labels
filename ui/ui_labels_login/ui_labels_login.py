@@ -19,7 +19,6 @@ from PySide6.QtWidgets import (QApplication, QFrame, QGridLayout, QHBoxLayout,
     QLabel, QLineEdit, QMainWindow, QPushButton,
     QSizePolicy, QSpacerItem, QVBoxLayout, QWidget)
 from resources.icons import icons
-from helpers.path_helper import PathHelper
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -48,7 +47,8 @@ class Ui_MainWindow(object):
 
         self.label = QLabel(self.frame)
         self.label.setObjectName(u"label")
-        self.label.setPixmap(QPixmap(f"{PathHelper.resolve()}resources/img/black_and_white_logo_only.png"))
+        self.label.setPixmap(QPixmap(u":/newPrefix/barcode_logo"))
+        self.label.setScaledContents(False)
 
         self.horizontalLayout.addWidget(self.label)
 

@@ -59,7 +59,10 @@
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap>../../resources/img/black_and_white_logo_only.png</pixmap>
+          <pixmap resource="../../resources/icons/icons.qrc">:/newPrefix/barcode_logo</pixmap>
+         </property>
+         <property name="scaledContents">
+          <bool>false</bool>
          </property>
         </widget>
        </item>
