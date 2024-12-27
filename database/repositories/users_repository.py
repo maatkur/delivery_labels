@@ -1,40 +1,46 @@
-from database.repositories.repository_config import RepositoryConfig
+from typing import Optional
+
+from database.config import RepositoryConfig
+from database.models import User  # Importe o modelo User
+from helpers.encrypt_helper import EncryptHelper
 
 
 class UsersRepository(RepositoryConfig):
 
     def __init__(self):
-        self.table_name = "users"
-        super().__init__(self.table_name)
+        super().__init__(table_name="users")
 
-    def get_user_credential(self, user_code) -> list or None:
+    def create_user(self, user_data: dict) -> None:
+        # Cria uma instância do modelo User com os parâmetros
+        new_user = User(
+                        id=user_data["id"],
+                        name=user_data["name"],
+                        password=EncryptHelper.encrypt_password(user_data["password"])
+        )
 
-        command = f"""SELECT * FROM users WHERE code = {user_code}"""
-        result = self.search_and_fetch(command)
+        # Agora adiciona essa instância ao banco
+        self.execute_and_commit(new_user)
+
+    def get_user_credential(self, user_code: str) -> Optional[dict]:
+        """
+        Obtém as credenciais do usuário com base no ID.
+        """
+        # Usando ORM para fazer a consulta
+        result = self.search(User, {"id": user_code})
 
         if result:
-            (
-                code,
-                name,
-                password,
-                store,
-            ) = result[0]
+            user = result[0]
             return {
-                "code": code,
-                "name": name,
-                "password": password,
-                "store": store,
+                "user_id": user.id,
+                "name": user.name,
+                "password": user.password
             }
-        else:
-            return
+        return None
 
-    def update_users(self, user) -> None:
-        command = """
-            INSERT OR REPLACE INTO users (code, name, password, store)
-            VALUES (?, ?, ?, ?);
+    def update_user(self, user_data: dict) -> None:
         """
-
-        values = list(user.values())
-
-        self.execute_and_commit(command, values)
-
+        Atualiza as informações de um usuário.
+        """
+        # Usando o método update do RepositoryConfig
+        filters = {"id": user_data["id"]}
+        self.update(User, filters, user_data)

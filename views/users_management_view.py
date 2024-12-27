@@ -2,7 +2,6 @@ from PySide6 import QtCore
 from PySide6.QtWidgets import *
 from dotenv import load_dotenv
 
-from helpers import WidgetHelper, UserUpdateHelper
 from ui import UsersManagementWindow
 
 from database.repositories.repository_manager import RepositoryManager
@@ -86,6 +85,7 @@ class UsersManagementView(QMainWindow):
                     cell_widget = QWidget()
                     cell_widget.setLayout(layout)
                     self.ui.tableWidget.setCellWidget(row, col, cell_widget)
+        self.adjust_table_header()
 
     def filter_user(self) -> None:
         user_code = self.ui.user_code_entry.text()
@@ -141,8 +141,8 @@ class UsersManagementView(QMainWindow):
 
     def adjust_table_header(self) -> None:
 
-        self.ui.tableWidget.horizontalHeader().resizeSection(0, 60)
-        self.ui.tableWidget.horizontalHeader().resizeSection(1, 145)
+        self.ui.tableWidget.horizontalHeader().resizeSection(0, 10)
+        self.ui.tableWidget.horizontalHeader().resizeSection(1, 170)
         self.ui.tableWidget.horizontalHeader().resizeSection(2, 98)
         self.ui.tableWidget.horizontalHeader().resizeSection(3, 79)
 

@@ -1,21 +1,15 @@
-import os
-import time
-
 from PySide6 import QtCore
 from PySide6.QtWidgets import *
-from ui import LabelPrinterWindow
-
-from helpers import WidgetHelper
-from helpers import LoggedUserHelper
-from helpers.date_helper import get_current_date
-from helpers.query_helper import QueryHelper
-
-from database.repositories.repository_manager import RepositoryManager
-
-from views.users_management_view import UsersManagementView
-from views.printed_labels_view import PrintedLabelsView
 
 from components.dialog_window.dialog_window_manager import DialogWindowManager
+from database.repositories.repository_manager import RepositoryManager
+from helpers import SessionHelper
+from helpers import WidgetHelper
+from helpers.query_helper import QueryHelper
+from helpers.date_helper import get_current_date
+from ui import LabelPrinterWindow
+from views.printed_labels_view import PrintedLabelsView
+from views.users_management_view import UsersManagementView
 
 
 class LabelsPrinterView(QMainWindow):
@@ -24,7 +18,8 @@ class LabelsPrinterView(QMainWindow):
         super(LabelsPrinterView, self).__init__(parent=None)
         self.ui = LabelPrinterWindow()  # instanciar a classe Ui_MainWindow
         self.ui.setupUi(self)
-        self.user = LoggedUserHelper.logged_user().get()
+        self.session = SessionHelper()
+        self.user = self.session.get("user")
         self.users_management_window = None
         self.printed_labels_window = None
         self.show_logged_user()
@@ -83,10 +78,10 @@ class LabelsPrinterView(QMainWindow):
             self.new_search()
         if widget == self.ui.search_button:
             self.search_order()
-        if self.user["permissions"]["admin"]:
+        if "MANAGE USERS" in self.user["permissions"]:
             if widget == self.ui.users_menu_button:
                 self.handle_users_management_button()
-        if self.user["permissions"]["report_access"]:
+        if "REPORT" in self.user["permissions"]:
             if widget == self.ui.reports_button:
                 self.handle_report_button()
 
@@ -145,11 +140,7 @@ class LabelsPrinterView(QMainWindow):
     def search_order(self) -> None:
         order_number = self.ui.order_entry.text()
 
-        os.system(rf"""
-                C:\Users\mathe\PycharmProjects\delivery_labels\output\search\search.exe {order_number}
-                """)
-
-        self.order_data = QueryHelper.verify_and_load()
+        self.order_data = QueryHelper.query_response(order_number)
 
         if self.order_data:
             self.manage_print_permissions()
@@ -159,14 +150,14 @@ class LabelsPrinterView(QMainWindow):
 
     def load_label_data(self) -> None:
 
-        self.ui.customer_field.setText(self.order_data["cliente"])
-        self.ui.service_store_field.setText(self.order_data["loja"])
+        self.ui.customer_field.setText(self.order_data["nome"])
+        self.ui.service_store_field.setText(self.order_data["loja"].replace("-", " ").replace("OBRA", "").replace("FACIL", "").replace("CD", ""))
         self.ui.label_date_field.setText(get_current_date())
-        self.ui.checker_field.setText(f'{self.user["code"]}')
+        self.ui.checker_field.setText(f'{self.user["user_id"]}')
 
     def show_logged_user(self) -> None:
 
-        self.ui.logged_user_label.setText(f"{self.user['code']}-{self.user['name']}")
+        self.ui.logged_user_label.setText(f"{self.user['user_id']}-{self.user['name']}")
 
     def disable_search_field(self) -> None:
         self.ui.order_entry.setDisabled(True)
@@ -205,14 +196,13 @@ class LabelsPrinterView(QMainWindow):
         WidgetHelper.enable_widget(widgets)
 
     def manage_users_management_button(self) -> None:
-
-        if self.user["permissions"]["admin"]:
+        if "MANAGE USERS" in self.user["permissions"]:
             WidgetHelper.enable_widget(self.ui.users_menu_button)
         else:
             WidgetHelper.disable_widget(self.ui.users_menu_button)
 
     def manage_report_button(self) -> None:
-        if self.user["permissions"]["report_access"]:
+        if "REPORT" in self.user["permissions"]:
             WidgetHelper.enable_widget(self.ui.reports_button)
         else:
             WidgetHelper.disable_widget(self.ui.reports_button)
@@ -254,36 +244,38 @@ class LabelsPrinterView(QMainWindow):
         order_number = self.ui.order_entry.text()
 
         label = {
-            "order_number": order_number,
-            "checker": self.ui.checker_field.text(),
-            "volumes": int(self.ui.label_quantity_display.text())
+            "order_id": order_number,
+            "user_id": self.ui.checker_field.text(),
+            "volumes": int(self.ui.label_quantity_display.text()),
+            "is_reprint": False,
+            "reprint_reason": None
         }
 
         if self.reprint_frame_activated:
-            label["reason"] = self.ui.reasons_combo_box.currentText()
-            label["reprinted"] = 1
+            label["reprint_reason"] = self.ui.reasons_combo_box.currentText()
+            label["is_reprint"] = True
 
         for volume in range(label["volumes"]):
             print(f"""
                         {order_number}
-                       CLIENTE: {self.ui.customer_field.text()} SEP: {label["checker"]} \n
+                       CLIENTE: {self.ui.customer_field.text()} SEP: {label["user_id"]} \n
                        ATENDIMENTO: {self.ui.service_store_field.text()} DEM: {self.ui.label_date_field.text()}
                        VOLUME {volume + 1}/{label["volumes"]}
                         """)
             print("===" * 30)
 
-        RepositoryManager.printed_labels_repository().insert(label)
+        RepositoryManager.printer_logs_repository().create_printer_log(label)
 
         self.new_search()
 
     def manage_print_permissions(self) -> None:
         order_number = self.ui.order_entry.text()
-        printed = RepositoryManager.printed_labels_repository().check_label(order_number)
+        printed = RepositoryManager.printer_logs_repository().verify_reprint(order_number)
 
         self.disable_search_field()
 
         if printed:
-            if self.user["permissions"]["reprint"]:
+            if "REPRINT LABELS" in self.user["permissions"]:
                 self.activate_reprint_frame()
                 self.load_label_data()
             else:
@@ -294,6 +286,8 @@ class LabelsPrinterView(QMainWindow):
 
 
 if __name__ == "__main__":
+    session = SessionHelper()
+    session.set("user", {'user_id': 999, 'name': 'admin', 'permissions': ['MANAGE USERS', 'REPORT', 'REPRINT LABELS']} )
     app = QApplication()
     window = LabelsPrinterView()
     window.show()

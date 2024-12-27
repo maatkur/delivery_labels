@@ -1,20 +1,34 @@
+from typing import Optional
+
 import bcrypt
+from database.repositories.repository_manager import RepositoryManager
 
 
 class Authenticator:
 
     @staticmethod
-    def authenticate(user) -> dict or bool:
+    def authenticate(user: dict):
+        """
+        Autentica um usuário com base no ID e na senha fornecida.
 
-        from database.repositories.repository_manager import RepositoryManager
+        :param user: Um dicionário com as chaves "user_id" e "password".
+        :return: Um dicionário contendo credenciais e permissões se autenticado, senão levanta ValueError.
+        """
+        # Obtenha as credenciais do repositório
+        credentials = RepositoryManager.users_repository().get_user_credential(user["user_id"])
 
-        credentials = RepositoryManager.users_repository().get_user_credential(user["code"])
-        if credentials:
-            incoming_password = user["password"].encode('utf-8')  # Converta a senha em bytes
-            stored_password = credentials["password"].encode('utf-8')
-            if bcrypt.checkpw(incoming_password, stored_password):
+        if not credentials:
+            return None
 
-                credentials["permissions"] = RepositoryManager.users_permissions_repository().retrieve_user_permissions(
-                    credentials["code"])
-                return credentials
-        return False
+        # Verifique a senha
+        incoming_password = user["password"].encode('utf-8')
+        stored_password = credentials["password"].encode('utf-8')
+
+        if not bcrypt.checkpw(incoming_password, stored_password):
+            return "login failed"
+        else:
+            # Obtenha as permissões do usuário
+            permissions = RepositoryManager.users_permissions_repository().get_user_permissions(user["user_id"])
+            credentials.pop("password", None)
+            credentials["permissions"] = permissions
+            return credentials

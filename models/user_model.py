@@ -7,9 +7,8 @@ class User:
     _permissions = None
 
     def set_data(self, logged_user: dict) -> None:
-        self._code = logged_user["code"]
+        self._code = logged_user["user_id"]
         self._name = logged_user["name"]
-        self._store = logged_user["store"]
         self._permissions = logged_user["permissions"]
 
     def clear_data(self):

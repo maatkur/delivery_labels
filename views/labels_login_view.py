@@ -1,14 +1,11 @@
 from PySide6 import QtCore
 from PySide6.QtWidgets import *
-from dotenv import load_dotenv
 
 from authenticator.authenticator import Authenticator
 from components import DialogWindowManager
-from helpers import WidgetHelper, LoggedUserHelper
+from helpers import WidgetHelper, SessionHelper
 from ui import LoginWindow
 from views.labels_printer_view import LabelsPrinterView
-
-load_dotenv(r'C:\Users\mathe\PycharmProjects\delivery_labels\config\development.env')
 
 
 class LabelsLoginView(QMainWindow):
@@ -55,20 +52,26 @@ class LabelsLoginView(QMainWindow):
 
     def login(self) -> None:
         user = {
-            "code": self.ui.user_entry.text(),
-            "password":  self.ui.password_entry.text()
+            "user_id": self.ui.user_entry.text(),
+            "password": self.ui.password_entry.text()
         }
-        authenticated_user = Authenticator.authenticate(user)
+        try:
+            authenticated_user = Authenticator.authenticate(user)
+            if authenticated_user:
+                # Usando a instância singleton do SessionHelper
+                session = SessionHelper()
+                session.set("user", authenticated_user)
 
-        if authenticated_user:
-            LoggedUserHelper.logged_user().set_data(authenticated_user)
-            if self.labels_printer_window is None:
                 self.labels_printer_window = LabelsPrinterView()
                 self.labels_printer_window.show()
-            self.close()
-        else:
+
+                self.close()
+            else:
+                DialogWindowManager.dialog().login_error()
+                self.clear_fields()
+        except ValueError as error:
             self.clear_fields()
-            DialogWindowManager.dialog().login_error()
+            DialogWindowManager.dialog().login_error(str(error))
 
     def clear_fields(self) -> None:
         widgets = [self.ui.user_entry, self.ui.password_entry]

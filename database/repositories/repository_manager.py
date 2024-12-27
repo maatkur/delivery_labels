@@ -1,13 +1,15 @@
 from .users_repository import UsersRepository
-from .users_permission_repository import UsersPermissionsRepository
-from .printed_labels_repository import PrintedLabelsRepository
+from .users_permissions_repository import UsersPermissionsRepository
+from .printer_logs_repository import PrinterLogsRepository
+from .permissions_repository import PermissionsRepository
 
 
 class RepositoryManager:
     _users_repository = None
     _orders_repository = None
     _users_permission_repository = None
-    _printed_labels_repository = None
+    _printer_logs_repository = None
+    _permissions_repository = None
 
     @staticmethod
     def users_repository() -> UsersRepository:
@@ -22,7 +24,13 @@ class RepositoryManager:
         return RepositoryManager._users_permission_repository
 
     @staticmethod
-    def printed_labels_repository() -> PrintedLabelsRepository:
-        if RepositoryManager._printed_labels_repository is None:
-            RepositoryManager._printed_labels_repository = PrintedLabelsRepository()
-        return RepositoryManager._printed_labels_repository
+    def printer_logs_repository() -> PrinterLogsRepository:
+        if RepositoryManager._printer_logs_repository is None:
+            RepositoryManager._printer_logs_repository = PrinterLogsRepository()
+        return RepositoryManager._printer_logs_repository
+
+    @staticmethod
+    def permissions_repository() -> PermissionsRepository:
+        if RepositoryManager._permissions_repository is None:
+            RepositoryManager._permissions_repository = PermissionsRepository()
+        return RepositoryManager._permissions_repository
