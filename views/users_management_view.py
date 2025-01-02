@@ -6,6 +6,7 @@ from functools import partial
 from database.repositories.repository_manager import RepositoryManager
 from helpers import WidgetHelper
 from ui import UsersManagementWindow
+from components.dialog_window.dialog_window_manager import DialogWindowManager
 
 
 class UsersManagementView(QMainWindow):
@@ -18,11 +19,17 @@ class UsersManagementView(QMainWindow):
         self.filtered_user_permission = None
         self.retrieve_and_load()
         self.connect_widget_actions()
-        WidgetHelper.install_event_filters(self,
-                                           [self.ui.user_code_entry]
-                                           )
+        WidgetHelper.install_event_filters(
+            self,
+            [
+                self.ui.user_code_entry,
+                self.ui.name_input,
+                self.ui.id_input,
+                self.ui.password_input
+             ]
+        )
         self.retrieve_permissions()
-        print(self.users_permissions)
+        self.ui.add_user_button.clicked.connect(self.handle_add_user_button)
 
     def eventFilter(self, widget, event) -> bool:
         if event.type() == QtCore.QEvent.KeyPress:
@@ -30,18 +37,28 @@ class UsersManagementView(QMainWindow):
             if key in [QtCore.Qt.Key_Return, QtCore.Qt.Key_Enter]:
                 self.handle_enter_key(widget)
                 return True  # Indica que o evento foi tratado
+        if event.type() == QtCore.QEvent.FocusIn:
+            if isinstance(widget, QLineEdit):
+                QtCore.QTimer.singleShot(0, lambda: widget.setCursorPosition(0))
         return super().eventFilter(widget, event)
 
     def handle_enter_key(self, widget) -> None:
         if widget == self.ui.user_code_entry:
             self.filter_and_load()
+        if widget == self.ui.id_input:
+            self.ui.name_input.setFocus()
+        if widget == self.ui.name_input:
+            self.ui.password_input.setFocus()
+        if widget == self.ui.password_input:
+            if len(self.ui.id_input.text()) > 0 and len(self.ui.name_input.text()) > 0 and len(self.ui.password_input.text()) > 0:
+                self.handle_add_user_button()
 
     def connect_widget_actions(self) -> None:
         self.ui.user_code_entry.textChanged.connect(self.manage_search_button)
         self.ui.clear_button.clicked.connect(self.handle_clear_button)
         self.ui.clear_button.clicked.connect(self.retrieve_and_load)
         self.ui.search_button.clicked.connect(self.filter_and_load)
-        self.ui.add_user_button.clicked.connect(None) #TODO Alterar para a função de adicionar usuário
+        self.ui.add_user_button.clicked.connect(None)  # TODO Alterar para a função de adicionar usuário
 
     def retrieve_permissions(self) -> None:
         self.users_permissions = RepositoryManager.users_permissions_repository().get_all_users_with_permissions()
@@ -50,7 +67,6 @@ class UsersManagementView(QMainWindow):
         self.retrieve_permissions()
 
         if len(self.users_permissions) > 0:
-
             self.load_table(self.users_permissions)
 
     from functools import partial
@@ -176,9 +192,56 @@ class UsersManagementView(QMainWindow):
     def handle_clear_button(self) -> None:
         WidgetHelper.clear_widget(self.ui.user_code_entry)
         WidgetHelper.clear_table(self.ui.tableWidget)
+        WidgetHelper.clear_widget(
+            [
+                self.ui.id_input,
+                self.ui.name_input,
+                self.ui.password_input
+            ]
+        )
+
+    def handle_add_user_button(self):
+        height = self.ui.widget.height()
+
+        user_data_fields = [self.ui.id_input, self.ui.name_input, self.ui.password_input]
+        has_user_data = all([len(field.text()) > 0 for field in user_data_fields])
+
+        if height == 0:
+            self.manage_widget_height()
+
+        elif height > 0 and has_user_data:
+            self.add_user()
+            WidgetHelper.clear_widget(user_data_fields)
+            self.manage_widget_height()
+
+        elif height > 0 and not has_user_data:
+            WidgetHelper.clear_widget(user_data_fields)
+            self.manage_widget_height()
+
+    def manage_widget_height(self) -> None:
+        height = self.ui.widget.height()
+
+        if height == 0:
+            self.ui.widget.setMaximumHeight(16777215)
+        else:
+            self.ui.widget.setMaximumHeight(0)
+
+    def add_user(self):
+        user = {
+            "id": self.ui.id_input.text(),
+            "name": self.ui.name_input.text(),
+            "password": self.ui.password_input.text()
+        }
+
+        user_has_created = RepositoryManager.users_repository().create_user_if_not_exists(user)
+
+        if not user_has_created:
+            DialogWindowManager.dialog().error("Usuário já cadastrado")
+        else:
+            DialogWindowManager.dialog().success("Usuário cadastrado com sucesso")
+            self.retrieve_and_load()
 
     def adjust_table_header(self) -> None:
-
         self.ui.tableWidget.horizontalHeader().resizeSection(0, 100)
         self.ui.tableWidget.horizontalHeader().resizeSection(1, 120)
         self.ui.tableWidget.horizontalHeader().resizeSection(2, 98)

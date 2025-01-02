@@ -56,11 +56,11 @@ class LabelsLoginView(QMainWindow):
             "password": self.ui.password_entry.text()
         }
         try:
-            authenticated_user = Authenticator.authenticate(user)
-            if authenticated_user["status"] == "success":
+            login_status, authenticated_user = Authenticator.authenticate(user)
+            if login_status.get("status") == "success":
                 # Usando a instância singleton do SessionHelper
                 session = SessionHelper()
-                session.set("user", authenticated_user)
+                session.set("user", authenticated_user.get("credentials"))
 
                 self.labels_printer_window = LabelsPrinterView()
                 self.labels_printer_window.show()
