@@ -510,7 +510,7 @@ border-radius: 10px</string>
            </widget>
           </item>
           <item alignment="Qt::AlignHCenter">
-           <widget class="QPushButton" name="layout_options_button">
+           <widget class="QPushButton" name="change_password_button">
             <property name="maximumSize">
              <size>
               <width>30</width>
@@ -525,7 +525,7 @@ border-radius: 10px</string>
             </property>
             <property name="icon">
              <iconset resource="../../resources/icons/icons.qrc">
-              <normaloff>:/newPrefix/atualiza_doc.ico</normaloff>:/newPrefix/atualiza_doc.ico</iconset>
+              <normaloff>:/newPrefix/reset-password.ico</normaloff>:/newPrefix/reset-password.ico</iconset>
             </property>
             <property name="iconSize">
              <size>

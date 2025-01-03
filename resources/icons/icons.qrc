@@ -1,5 +1,8 @@
 <RCC>
   <qresource prefix="newPrefix">
+    <file>reset-password.ico</file>
+    <file>show.ico</file>
+    <file>hidden.ico</file>
     <file>add_user</file>
     <file>adicionar.ico</file>
     <file>apagar.ico</file>

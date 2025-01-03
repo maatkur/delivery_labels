@@ -10,6 +10,7 @@ from helpers.date_helper import DateHelper
 from ui import LabelPrinterWindow
 from views.labels_report_view import PrintedLabelsView
 from views.users_management_view import UsersManagementView
+from views.password_chage_view import ChangePasswordView
 
 
 class LabelsPrinterView(QMainWindow):
@@ -22,6 +23,7 @@ class LabelsPrinterView(QMainWindow):
         self.user = self.session.get("user")
         self.users_management_window = None
         self.printed_labels_window = None
+        self.change_password_window = None
         self.show_logged_user()
         self.order_data = None
         self.orders_update_window = None
@@ -37,7 +39,7 @@ class LabelsPrinterView(QMainWindow):
             self.ui.print_button,
             self.ui.users_menu_button,
             self.ui.reports_button,
-            self.ui.layout_options_button,
+            self.ui.change_password_button,
             self.ui.increment_button,
             self.ui.decrement_button
         ]
@@ -50,6 +52,7 @@ class LabelsPrinterView(QMainWindow):
         self.ui.users_menu_button.clicked.connect(self.handle_users_management_button)
         self.ui.reasons_combo_box.currentTextChanged.connect(self.manage_print_button)
         self.ui.print_button.clicked.connect(self.handle_print_button)
+        self.ui.change_password_button.clicked.connect(self.handle_change_password_button)
 
     def eventFilter(self, widget, event):
         if event.type() == QtCore.QEvent.KeyPress:
@@ -283,6 +286,11 @@ class LabelsPrinterView(QMainWindow):
                 self.new_search()
         else:
             self.load_label_data()
+            
+    def handle_change_password_button(self) -> None:
+        self.change_password_window = ChangePasswordView()
+        self.change_password_window.setWindowModality(QtCore.Qt.ApplicationModal)
+        self.change_password_window.show()
 
 
 if __name__ == "__main__":

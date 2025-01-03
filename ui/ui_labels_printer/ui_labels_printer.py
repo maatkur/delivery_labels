@@ -212,17 +212,17 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_4.addWidget(self.reports_button, 0, Qt.AlignHCenter)
 
-        self.layout_options_button = QPushButton(self.drawer)
-        self.layout_options_button.setObjectName(u"layout_options_button")
-        self.layout_options_button.setMaximumSize(QSize(30, 30))
-        self.layout_options_button.setLayoutDirection(Qt.LeftToRight)
+        self.change_password_button = QPushButton(self.drawer)
+        self.change_password_button.setObjectName(u"change_password_button")
+        self.change_password_button.setMaximumSize(QSize(30, 30))
+        self.change_password_button.setLayoutDirection(Qt.LeftToRight)
         icon7 = QIcon()
-        icon7.addFile(u":/newPrefix/atualiza_doc.ico", QSize(), QIcon.Normal, QIcon.Off)
-        self.layout_options_button.setIcon(icon7)
-        self.layout_options_button.setIconSize(QSize(25, 25))
-        self.layout_options_button.setFlat(True)
+        icon7.addFile(u":/newPrefix/reset-password.ico", QSize(), QIcon.Normal, QIcon.Off)
+        self.change_password_button.setIcon(icon7)
+        self.change_password_button.setIconSize(QSize(25, 25))
+        self.change_password_button.setFlat(True)
 
-        self.verticalLayout_4.addWidget(self.layout_options_button, 0, Qt.AlignHCenter)
+        self.verticalLayout_4.addWidget(self.change_password_button, 0, Qt.AlignHCenter)
 
 
         self.horizontalLayout.addWidget(self.drawer)
@@ -512,7 +512,7 @@ class Ui_MainWindow(object):
         self.logged_user_label.setText(QCoreApplication.translate("MainWindow", u"15 - EZEQUIEL", None))
         self.users_menu_button.setText("")
         self.reports_button.setText("")
-        self.layout_options_button.setText("")
+        self.change_password_button.setText("")
         self.label.setText(QCoreApplication.translate("MainWindow", u"CLIENTE:", None))
         self.customer_field.setText("")
         self.label_2.setText(QCoreApplication.translate("MainWindow", u"ATENDIMENTO:", None))

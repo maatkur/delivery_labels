@@ -2,3 +2,4 @@ from ui.ui_labels_login.ui_labels_login import Ui_MainWindow as LoginWindow
 from ui.ui_labels_printer.ui_labels_printer import Ui_MainWindow as LabelPrinterWindow
 from .ui_users_management.ui_users_management import Ui_MainWindow as UsersManagementWindow
 from .ui_printed_labels.ui_printed_labels import Ui_MainWindow as PrintedLabelsWindow
+from .ui_change_password.change_password_ui import Ui_MainWindow as ChangePasswordWindow
