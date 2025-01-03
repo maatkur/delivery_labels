@@ -6,9 +6,9 @@ from database.repositories.repository_manager import RepositoryManager
 from helpers import SessionHelper
 from helpers import WidgetHelper
 from helpers.query_helper import QueryHelper
-from helpers.date_helper import get_current_date
+from helpers.date_helper import DateHelper
 from ui import LabelPrinterWindow
-from views.printed_labels_view import PrintedLabelsView
+from views.labels_report_view import PrintedLabelsView
 from views.users_management_view import UsersManagementView
 
 
@@ -152,7 +152,7 @@ class LabelsPrinterView(QMainWindow):
 
         self.ui.customer_field.setText(self.order_data["nome"])
         self.ui.service_store_field.setText(self.order_data["loja"].replace("-", " ").replace("OBRA", "").replace("FACIL", "").replace("CD", ""))
-        self.ui.label_date_field.setText(get_current_date())
+        self.ui.label_date_field.setText(DateHelper.get_current_date())
         self.ui.checker_field.setText(f'{self.user["user_id"]}')
 
     def show_logged_user(self) -> None:

@@ -1,8 +1,8 @@
-"""create_printer_logs
+"""create printed_logs
 
-Revision ID: 195217a3c8fa
+Revision ID: 6ee3390e97d0
 Revises: 8c0d1c442352
-Create Date: 2024-12-27 12:23:51.880268
+Create Date: 2025-01-03 11:12:18.006891
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '195217a3c8fa'
+revision: str = '6ee3390e97d0'
 down_revision: Union[str, None] = '8c0d1c442352'
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -25,7 +25,7 @@ def upgrade() -> None:
     sa.Column('order_id', sa.String(length=50), nullable=False),
     sa.Column('user_id', sa.String(length=50), nullable=False),
     sa.Column('volumes', sa.Integer(), nullable=False),
-    sa.Column('printed_at', sa.DateTime(timezone=True), nullable=True),
+    sa.Column('printed_at', sa.Date(), nullable=True),
     sa.Column('is_reprint', sa.Boolean(), nullable=True),
     sa.Column('reprint_reason', sa.String(length=255), nullable=True),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),

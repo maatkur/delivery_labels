@@ -170,10 +170,6 @@ class UsersManagementView(QMainWindow):
         ]
         success = repo.update_user_permissions(user_id, permission_ids)
 
-        if success:
-            print(f"Permissões atualizadas com sucesso para o usuário {user_id}: {current_permissions}")
-        else:
-            print(f"Erro ao atualizar permissões para o usuário {user_id}")
 
     def enable_search_button(self) -> None:
         self.ui.search_button.setDisabled(False)

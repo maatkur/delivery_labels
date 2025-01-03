@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, func, Boolean
+from sqlalchemy import Column, Integer, String, Date, ForeignKey, Boolean
 import pytz
 from datetime import datetime
 from database.base import Base
@@ -12,8 +12,8 @@ class PrinterLog(Base):
     user_id = Column(String(50), ForeignKey("users.id"), nullable=False)
     volumes = Column(Integer, nullable=False, default=1)
 
-    # Ajusta o fuso horário para o Brasil (São Paulo)
-    printed_at = Column(DateTime(timezone=True), default=lambda: datetime.now(pytz.timezone('America/Sao_Paulo')))
+    # Ajusta o fuso horário para o Brasil e usa apenas a data
+    printed_at = Column(Date, default=lambda: datetime.now(pytz.timezone('America/Sao_Paulo')).date())
 
     is_reprint = Column(Boolean, default=False)  # Flag para identificar reimpressão
     reprint_reason = Column(String(255), nullable=True)  # Justificativa opcional

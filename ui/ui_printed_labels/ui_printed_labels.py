@@ -8,17 +8,11 @@
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
-    QMetaObject, QObject, QPoint, QRect,
-    QSize, QTime, QUrl, Qt)
-from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
-    QFont, QFontDatabase, QGradient, QIcon,
-    QImage, QKeySequence, QLinearGradient, QPainter,
-    QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QAbstractSpinBox, QApplication, QDateEdit, QFrame,
-    QHBoxLayout, QHeaderView, QMainWindow, QSizePolicy,
-    QSpacerItem, QTableWidget, QTableWidgetItem, QVBoxLayout,
-    QWidget)
+from PySide6.QtCore import (QCoreApplication, QMetaObject, QSize, Qt)
+from PySide6.QtGui import (QFont, QIcon)
+from PySide6.QtWidgets import (QAbstractItemView, QAbstractSpinBox, QDateEdit,
+                               QFrame, QHBoxLayout, QSizePolicy, QSpacerItem, QTableWidget, QTableWidgetItem,
+                               QVBoxLayout, QWidget)
 from resources.icons import icons
 
 class Ui_MainWindow(object):
@@ -120,6 +114,8 @@ class Ui_MainWindow(object):
         self.tableWidget.setObjectName(u"tableWidget")
         self.tableWidget.setStyleSheet(u"background-color: rgb( 245, 190, 11);\n"
 "color: black;")
+        self.tableWidget.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.tableWidget.setSelectionBehavior(QAbstractItemView.SelectRows)
 
         self.horizontalLayout_2.addWidget(self.tableWidget)
 
@@ -142,7 +138,7 @@ class Ui_MainWindow(object):
         ___qtablewidgetitem2 = self.tableWidget.horizontalHeaderItem(2)
         ___qtablewidgetitem2.setText(QCoreApplication.translate("MainWindow", u"Volumes", None));
         ___qtablewidgetitem3 = self.tableWidget.horizontalHeaderItem(3)
-        ___qtablewidgetitem3.setText(QCoreApplication.translate("MainWindow", u"Emiss\u00e3o da etiqueta", None));
+        ___qtablewidgetitem3.setText(QCoreApplication.translate("MainWindow", u"Data da emiss\u00e3o", None));
         ___qtablewidgetitem4 = self.tableWidget.horizontalHeaderItem(4)
         ___qtablewidgetitem4.setText(QCoreApplication.translate("MainWindow", u"Reimpressa", None));
         ___qtablewidgetitem5 = self.tableWidget.horizontalHeaderItem(5)

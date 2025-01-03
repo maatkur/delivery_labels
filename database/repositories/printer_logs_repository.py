@@ -31,3 +31,5 @@ class PrinterLogsRepository(RepositoryConfig):
         if result:
             return True
         return False
+
+

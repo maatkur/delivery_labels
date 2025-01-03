@@ -161,6 +161,12 @@ color: white;</string>
           <string notr="true">background-color: rgb( 245, 190, 11);
 color: black;</string>
          </property>
+         <property name="editTriggers">
+          <set>QAbstractItemView::NoEditTriggers</set>
+         </property>
+         <property name="selectionBehavior">
+          <enum>QAbstractItemView::SelectRows</enum>
+         </property>
          <column>
           <property name="text">
            <string>Pedido</string>
@@ -205,7 +211,7 @@ color: black;</string>
          </column>
          <column>
           <property name="text">
-           <string>Emissão da etiqueta</string>
+           <string>Data da emissão</string>
           </property>
           <property name="font">
            <font>
