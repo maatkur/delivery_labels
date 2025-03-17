@@ -83,11 +83,14 @@ class UsersManagementView(QMainWindow):
         }
 
         # Definir número de linhas e colunas
-        self.ui.tableWidget.setRowCount(len(users_permissions))
+        self.ui.tableWidget.setRowCount(len(users_permissions) - 1)  # Ignorar usuário de ID 999
         self.ui.tableWidget.setColumnCount(4)  # Código, Nome, Reimpressão, Relatórios
 
         for row, user_data in enumerate(users_permissions):
             # Configurar Código e Nome
+            if user_data['user_id'] == 999:
+                continue
+
             for col, value in enumerate([str(user_data['user_id']), user_data['user_name']]):
                 item = QTableWidgetItem(value)
                 item.setTextAlignment(QtCore.Qt.AlignCenter)  # Centralizar o texto
