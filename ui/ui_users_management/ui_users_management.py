@@ -26,6 +26,7 @@ class Ui_MainWindow(object):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(402, 389)
+        MainWindow.setMinimumSize(QSize(402, 389))
         MainWindow.setMaximumSize(QSize(402, 389))
         icon = QIcon()
         icon.addFile(u":/newPrefix/barcode.ico", QSize(), QIcon.Normal, QIcon.Off)
