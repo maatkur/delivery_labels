@@ -1,5 +1,5 @@
 from PySide6 import QtCore
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, QSize
 from PySide6.QtWidgets import *
 from functools import partial
 
@@ -7,6 +7,7 @@ from database.repositories.repository_manager import RepositoryManager
 from helpers import WidgetHelper
 from ui import UsersManagementWindow
 from components.dialog_window.dialog_window_manager import DialogWindowManager
+from helpers import SessionHelper
 
 
 class UsersManagementView(QMainWindow):
@@ -15,6 +16,8 @@ class UsersManagementView(QMainWindow):
         super(UsersManagementView, self).__init__(parent=None)
         self.ui = UsersManagementWindow()  # instanciar a classe Ui_MainWindow
         self.ui.setupUi(self)
+        self.session = SessionHelper()
+        self.user = self.session.get("user")
         self.users_permissions = None
         self.filtered_user_permission = None
         self.retrieve_and_load()
@@ -30,6 +33,7 @@ class UsersManagementView(QMainWindow):
         )
         self.retrieve_permissions()
         self.ui.add_user_button.clicked.connect(self.handle_add_user_button)
+        self.admin_secrets()
 
     def eventFilter(self, widget, event) -> bool:
         if event.type() == QtCore.QEvent.KeyPress:
@@ -69,8 +73,6 @@ class UsersManagementView(QMainWindow):
         if len(self.users_permissions) > 0:
             self.load_table(self.users_permissions)
 
-    from functools import partial
-
     def load_table(self, users_permissions: list) -> None:
         # Limpar entrada e tabela
         WidgetHelper.clear_widget(self.ui.user_code_entry)
@@ -79,17 +81,18 @@ class UsersManagementView(QMainWindow):
         # Mapear permissões para colunas
         permission_columns = {
             "REPRINT LABELS": 2,  # Coluna para Reimpressão
-            "REPORT": 3  # Coluna para Relatórios
+            "REPORT": 3, # Coluna para Relatórios
+            "MANAGE USERS": 4  # Coluna para Usuários
         }
 
         # Definir número de linhas e colunas
-        self.ui.tableWidget.setRowCount(len(users_permissions) - 1)  # Ignorar usuário de ID 999
-        self.ui.tableWidget.setColumnCount(4)  # Código, Nome, Reimpressão, Relatórios
+        self.ui.tableWidget.setRowCount(len(users_permissions))  # Ignorar usuário de ID 999
+        self.ui.tableWidget.setColumnCount(5)  # Código, Nome, Reimpressão, Relatórios
 
         for row, user_data in enumerate(users_permissions):
-            # Configurar Código e Nome
-            if user_data['user_id'] == 999:
-                continue
+            # # Configurar Código e Nome
+            # if user_data['user_id'] == 999:
+            #     continue
 
             for col, value in enumerate([str(user_data['user_id']), user_data['user_name']]):
                 item = QTableWidgetItem(value)
@@ -144,7 +147,8 @@ class UsersManagementView(QMainWindow):
         # Tradução do índice da coluna para o nome da permissão
         permission_map = {
             2: "REPRINT LABELS",  # Coluna Reimpressão
-            3: "REPORT"  # Coluna Relatórios
+            3: "REPORT",  # Coluna Relatórios
+            4: "MANAGE USERS"  # Coluna Usuários
         }
 
         # Obter o código do usuário e a permissão correspondente
@@ -172,7 +176,6 @@ class UsersManagementView(QMainWindow):
             repo.get_permission_id_by_name(perm) for perm in current_permissions
         ]
         success = repo.update_user_permissions(user_id, permission_ids)
-
 
     def enable_search_button(self) -> None:
         self.ui.search_button.setDisabled(False)
@@ -245,6 +248,14 @@ class UsersManagementView(QMainWindow):
         self.ui.tableWidget.horizontalHeader().resizeSection(1, 120)
         self.ui.tableWidget.horizontalHeader().resizeSection(2, 98)
         self.ui.tableWidget.horizontalHeader().resizeSection(3, 79)
+
+    def admin_secrets(self):
+        if self.user["user_id"] == 999:
+            # Libera o tamanho máximo da janela
+            self.setMaximumSize(QSize(16777215, 16777215))  # Valor máximo do Qt
+        else:
+            # Mantém o tamanho fixo pra não-admin
+            self.setMaximumSize(QSize(402, 389))
 
 
 if __name__ == "__main__":

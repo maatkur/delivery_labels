@@ -26,6 +26,7 @@ class Ui_MainWindow(object):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(402, 389)
+        MainWindow.setMaximumSize(QSize(402, 389))
         icon = QIcon()
         icon.addFile(u":/newPrefix/barcode.ico", QSize(), QIcon.Normal, QIcon.Off)
         MainWindow.setWindowIcon(icon)
@@ -220,8 +221,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_5.setObjectName(u"verticalLayout_5")
         self.verticalLayout_5.setContentsMargins(0, 0, 0, 0)
         self.tableWidget = QTableWidget(self.table_frame)
-        if (self.tableWidget.columnCount() < 4):
-            self.tableWidget.setColumnCount(4)
+        if (self.tableWidget.columnCount() < 5):
+            self.tableWidget.setColumnCount(5)
         __qtablewidgetitem = QTableWidgetItem()
         __qtablewidgetitem.setFont(font);
         self.tableWidget.setHorizontalHeaderItem(0, __qtablewidgetitem)
@@ -234,6 +235,9 @@ class Ui_MainWindow(object):
         __qtablewidgetitem3 = QTableWidgetItem()
         __qtablewidgetitem3.setFont(font);
         self.tableWidget.setHorizontalHeaderItem(3, __qtablewidgetitem3)
+        __qtablewidgetitem4 = QTableWidgetItem()
+        __qtablewidgetitem4.setFont(font);
+        self.tableWidget.setHorizontalHeaderItem(4, __qtablewidgetitem4)
         self.tableWidget.setObjectName(u"tableWidget")
         self.tableWidget.setStyleSheet(u"background-color: rgb( 245, 190, 11);\n"
 "color: black;")
@@ -277,5 +281,7 @@ class Ui_MainWindow(object):
         ___qtablewidgetitem2.setText(QCoreApplication.translate("MainWindow", u"Reimpress\u00e3o", None));
         ___qtablewidgetitem3 = self.tableWidget.horizontalHeaderItem(3)
         ___qtablewidgetitem3.setText(QCoreApplication.translate("MainWindow", u"Relat\u00f3rios", None));
+        ___qtablewidgetitem4 = self.tableWidget.horizontalHeaderItem(4)
+        ___qtablewidgetitem4.setText(QCoreApplication.translate("MainWindow", u"Users", None));
     # retranslateUi
 

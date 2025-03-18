@@ -10,6 +10,12 @@
     <height>389</height>
    </rect>
   </property>
+  <property name="maximumSize">
+   <size>
+    <width>402</width>
+    <height>389</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>Etiquetas | Gerenciamento de permissões</string>
   </property>
@@ -521,6 +527,17 @@ color: black;</string>
          <column>
           <property name="text">
            <string>Relatórios</string>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>11</pointsize>
+            <bold>true</bold>
+           </font>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Users</string>
           </property>
           <property name="font">
            <font>
