@@ -62,7 +62,6 @@ class UsersManagementView(QMainWindow):
         self.ui.clear_button.clicked.connect(self.handle_clear_button)
         self.ui.clear_button.clicked.connect(self.retrieve_and_load)
         self.ui.search_button.clicked.connect(self.filter_and_load)
-        self.ui.add_user_button.clicked.connect(None)  # TODO Alterar para a função de adicionar usuário
 
     def retrieve_permissions(self) -> None:
         self.users_permissions = RepositoryManager.users_permissions_repository().get_all_users_with_permissions()
@@ -259,6 +258,8 @@ class UsersManagementView(QMainWindow):
 
 
 if __name__ == "__main__":
+    session = SessionHelper()
+    session.set("user", {'user_id': 999, 'name': 'admin', 'permissions': ['MANAGE USERS', 'REPORT', 'REPRINT LABELS']})
     app = QApplication()
     window = UsersManagementView()
     window.show()

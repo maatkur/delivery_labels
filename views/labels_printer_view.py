@@ -7,6 +7,7 @@ from helpers import SessionHelper
 from helpers import WidgetHelper
 from helpers.query_helper import QueryHelper
 from helpers.date_helper import DateHelper
+from helpers.sanitize_str_helper import SanitizeStrHelper
 from ui import LabelPrinterWindow
 from views.labels_report_view import PrintedLabelsView
 from views.users_management_view import UsersManagementView
@@ -145,7 +146,7 @@ class LabelsPrinterView(QMainWindow):
         order_number = self.ui.order_entry.text()
 
         self.order_data = QueryHelper.query_response(order_number)
-        print(self.order_data)
+
         if self.order_data:
             self.manage_print_permissions()
         else:
@@ -153,11 +154,10 @@ class LabelsPrinterView(QMainWindow):
             self.new_search()
 
     def load_label_data(self) -> None:
-        # TODO: Refatorar para utilizar o método de formatação de strings
 
         self.ui.customer_field.setText(self.order_data["nome"])
         self.ui.service_store_field.setText(
-            self.order_data["loja"].replace("-", " ").replace("OBRA", "").replace("FACIL", "").replace("CD", "")
+            SanitizeStrHelper.sanitize_str(self.order_data["loja"])
         )
         self.ui.label_date_field.setText(DateHelper.get_current_date())
         self.ui.checker_field.setText(f'{self.user["user_id"]}')
@@ -172,20 +172,10 @@ class LabelsPrinterView(QMainWindow):
     def enable_search_field(self) -> None:
         self.ui.order_entry.setDisabled(False)
 
-    # TODO: Simplificar a lógica de desabilitar e habilitar botões
-    def disable_search_button(self) -> None:
-        self.ui.search_button.setDisabled(True)
-
-    def enable_search_button(self) -> None:
-        self.ui.search_button.setDisabled(False)
-
     def manage_search_button(self) -> None:
         order_entry_filled = len(self.ui.order_entry.text()) > 0
 
-        if order_entry_filled:
-            self.enable_search_button()
-        else:
-            self.disable_search_button()
+        self.ui.search_button.setEnabled(order_entry_filled)
 
     def disable_admin_widgets(self) -> None:
         widgets = [
@@ -210,10 +200,9 @@ class LabelsPrinterView(QMainWindow):
             WidgetHelper.disable_widget(self.ui.users_menu_button)
 
     def manage_report_button(self) -> None:
-        if "REPORT" in self.user["permissions"]:
-            WidgetHelper.enable_widget(self.ui.reports_button)
-        else:
-            WidgetHelper.disable_widget(self.ui.reports_button)
+        can_access_reports = "REPORT" in self.user["permissions"]
+
+        self.ui.reports_button.setEnabled(can_access_reports)
 
     def manage_print_button(self) -> None:
         label_data_filled = len(self.ui.customer_field.text()) > 0
@@ -231,12 +220,9 @@ class LabelsPrinterView(QMainWindow):
                 WidgetHelper.disable_widget(self.ui.print_button)
 
     def manage_clear_button(self) -> None:
-        valid_info = len(self.ui.customer_field.text()) > 0
+        can_enable_clear_button = len(self.ui.customer_field.text()) > 0
 
-        if valid_info:
-            WidgetHelper.enable_widget(self.ui.clear_button)
-        else:
-            WidgetHelper.disable_widget(self.ui.clear_button)
+        self.ui.clear_button.setEnabled(can_enable_clear_button)
 
     def handle_users_management_button(self) -> None:
         self.users_management_window = UsersManagementView()
