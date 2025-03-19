@@ -38,7 +38,6 @@ class RepositoryConfig:
         try:
             with get_session() as session:
                 session.add(instance)  # Adiciona a instância
-                print(instance)
                 session.commit()  # Realiza o commit
         except SQLAlchemyError as e:
             print(f"Erro ao inserir dados: {e}")

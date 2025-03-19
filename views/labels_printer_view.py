@@ -11,6 +11,7 @@ from ui import LabelPrinterWindow
 from views.labels_report_view import PrintedLabelsView
 from views.users_management_view import UsersManagementView
 from views.password_chage_view import ChangePasswordView
+from printer.printer import Printer
 
 
 class LabelsPrinterView(QMainWindow):
@@ -144,7 +145,7 @@ class LabelsPrinterView(QMainWindow):
         order_number = self.ui.order_entry.text()
 
         self.order_data = QueryHelper.query_response(order_number)
-
+        print(self.order_data)
         if self.order_data:
             self.manage_print_permissions()
         else:
@@ -152,9 +153,12 @@ class LabelsPrinterView(QMainWindow):
             self.new_search()
 
     def load_label_data(self) -> None:
+        # TODO: Refatorar para utilizar o método de formatação de strings
 
         self.ui.customer_field.setText(self.order_data["nome"])
-        self.ui.service_store_field.setText(self.order_data["loja"].replace("-", " ").replace("OBRA", "").replace("FACIL", "").replace("CD", ""))
+        self.ui.service_store_field.setText(
+            self.order_data["loja"].replace("-", " ").replace("OBRA", "").replace("FACIL", "").replace("CD", "")
+        )
         self.ui.label_date_field.setText(DateHelper.get_current_date())
         self.ui.checker_field.setText(f'{self.user["user_id"]}')
 
@@ -168,6 +172,7 @@ class LabelsPrinterView(QMainWindow):
     def enable_search_field(self) -> None:
         self.ui.order_entry.setDisabled(False)
 
+    # TODO: Simplificar a lógica de desabilitar e habilitar botões
     def disable_search_button(self) -> None:
         self.ui.search_button.setDisabled(True)
 
@@ -244,12 +249,16 @@ class LabelsPrinterView(QMainWindow):
         self.printed_labels_window.show()
 
     def handle_print_button(self) -> None:
+
         order_number = self.ui.order_entry.text()
 
         label = {
-            "order_id": order_number,
+            "customer": self.order_data["nome"],
+            "store": self.ui.service_store_field.text(),
+            "date": self.ui.label_date_field.text(),
             "user_id": self.ui.checker_field.text(),
             "volumes": int(self.ui.label_quantity_display.text()),
+            "order_id": order_number,
             "is_reprint": False,
             "reprint_reason": None
         }
@@ -258,14 +267,7 @@ class LabelsPrinterView(QMainWindow):
             label["reprint_reason"] = self.ui.reasons_combo_box.currentText()
             label["is_reprint"] = True
 
-        for volume in range(label["volumes"]):
-            print(f"""
-                        {order_number}
-                       CLIENTE: {self.ui.customer_field.text()} SEP: {label["user_id"]} \n
-                       ATENDIMENTO: {self.ui.service_store_field.text()} DEM: {self.ui.label_date_field.text()}
-                       VOLUME {volume + 1}/{label["volumes"]}
-                        """)
-            print("===" * 30)
+        Printer.print_label(label)
 
         RepositoryManager.printer_logs_repository().create_printer_log(label)
 
@@ -286,7 +288,7 @@ class LabelsPrinterView(QMainWindow):
                 self.new_search()
         else:
             self.load_label_data()
-            
+
     def handle_change_password_button(self) -> None:
         self.change_password_window = ChangePasswordView()
         self.change_password_window.setWindowModality(QtCore.Qt.ApplicationModal)
@@ -295,7 +297,7 @@ class LabelsPrinterView(QMainWindow):
 
 if __name__ == "__main__":
     session = SessionHelper()
-    session.set("user", {'user_id': 999, 'name': 'admin', 'permissions': ['MANAGE USERS', 'REPORT', 'REPRINT LABELS']} )
+    session.set("user", {'user_id': 999, 'name': 'admin', 'permissions': ['MANAGE USERS', 'REPORT', 'REPRINT LABELS']})
     app = QApplication()
     window = LabelsPrinterView()
     window.show()
