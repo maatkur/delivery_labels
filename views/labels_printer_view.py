@@ -55,6 +55,9 @@ class LabelsPrinterView(QMainWindow):
         self.ui.reasons_combo_box.currentTextChanged.connect(self.manage_print_button)
         self.ui.print_button.clicked.connect(self.handle_print_button)
         self.ui.change_password_button.clicked.connect(self.handle_change_password_button)
+        self.ui.reasons_combo_box.currentTextChanged.connect(self.manage_complement_combo_box)
+        self.ui.complement_id_combo_box.currentTextChanged.connect(self.manage_print_button)
+        self.ui.label_quantity_display.textEdited.connect(self.validate_quantity_input)
 
     def eventFilter(self, widget, event):
         if event.type() == QtCore.QEvent.KeyPress:
@@ -110,14 +113,30 @@ class LabelsPrinterView(QMainWindow):
         self.resize(600, 200)
         self.ui.reprint_frame.setMinimumHeight(0)
         self.ui.reasons_combo_box.setCurrentText("Selecione")
+        self.ui.complement_id_combo_box.setCurrentText("Selecione")
 
     def change_quantity_display(self, value) -> None:
-        volume = int(self.ui.label_quantity_display.text())
-
+        volume = int(self.ui.label_quantity_display.text() or "1")  # Default 1 se vazio
         volume += value
-
         if 1 <= volume <= 36:
             self.ui.label_quantity_display.setText(f"{volume}")
+
+    def validate_quantity_input(self, text: str) -> None:
+        # Se vazio, aceita (vai preencher depois)
+        if not text:
+            return
+
+        # Tenta converter pra int
+        try:
+            volume = int(text)
+            # Corrige se fora do limite
+            if volume < 1:
+                self.ui.label_quantity_display.setText("1")
+            elif volume > 36:
+                self.ui.label_quantity_display.setText("1")
+        except ValueError:
+            # Se não for número, volta pro último valor válido ou 1
+            self.ui.label_quantity_display.setText("1")
 
     def change_quantity_label(self) -> None:
         volume = int(self.ui.label_quantity_display.text())
@@ -209,15 +228,31 @@ class LabelsPrinterView(QMainWindow):
         reason_selected = self.ui.reasons_combo_box.currentText() != "Selecione"
 
         if self.reprint_frame_activated:
+            # Só prossegue se label_data_filled e reason_selected forem verdadeiros
             if label_data_filled and reason_selected:
-                WidgetHelper.enable_widget(self.ui.print_button)
+                # Caso especial: "Pedido complementar/parcial"
+                if self.ui.reasons_combo_box.currentText() == "Pedido complementar/parcial":
+                    # Só ativa se complement_id for diferente de "Selecione"
+                    if self.ui.complement_id_combo_box.currentText() != "Selecione":
+                        WidgetHelper.enable_widget(self.ui.print_button)
+                    else:
+                        WidgetHelper.disable_widget(self.ui.print_button)
+                # Outros motivos: ativa direto
+                else:
+                    WidgetHelper.enable_widget(self.ui.print_button)
             else:
                 WidgetHelper.disable_widget(self.ui.print_button)
         else:
+            # Fora do reprint_frame, só checa label_data_filled
             if label_data_filled:
                 WidgetHelper.enable_widget(self.ui.print_button)
             else:
                 WidgetHelper.disable_widget(self.ui.print_button)
+
+    def manage_complement_combo_box(self) -> None:
+        can_enable_complement_combo_box = self.ui.reasons_combo_box.currentText() == "Pedido complementar/parcial"
+
+        self.ui.complement_id_combo_box.setEnabled(can_enable_complement_combo_box)
 
     def manage_clear_button(self) -> None:
         can_enable_clear_button = len(self.ui.customer_field.text()) > 0
@@ -252,6 +287,9 @@ class LabelsPrinterView(QMainWindow):
         if self.reprint_frame_activated:
             label["reprint_reason"] = self.ui.reasons_combo_box.currentText()
             label["is_reprint"] = True
+
+        if label["reprint_reason"] == "Pedido complementar/parcial":
+            label["order_id"] = label["order_id"] + rf"/{self.ui.complement_id_combo_box.currentText()}"
 
         Printer.print_label(label)
 

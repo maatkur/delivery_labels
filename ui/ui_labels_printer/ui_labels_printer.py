@@ -395,9 +395,9 @@ class Ui_MainWindow(object):
         self.label_quantity_display.setFont(font2)
         self.label_quantity_display.setStyleSheet(u"font-size: 13px;\n"
 "color: black;")
-        self.label_quantity_display.setMaxLength(2)
+        self.label_quantity_display.setMaxLength(32767)
         self.label_quantity_display.setAlignment(Qt.AlignCenter)
-        self.label_quantity_display.setReadOnly(True)
+        self.label_quantity_display.setReadOnly(False)
 
         self.horizontalLayout_6.addWidget(self.label_quantity_display)
 
@@ -428,17 +428,14 @@ class Ui_MainWindow(object):
         self.horizontalLayout_8 = QHBoxLayout(self.reprint_frame)
         self.horizontalLayout_8.setSpacing(0)
         self.horizontalLayout_8.setObjectName(u"horizontalLayout_8")
-        self.horizontalLayout_8.setContentsMargins(0, 0, 0, -1)
-        self.horizontalSpacer_3 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-
-        self.horizontalLayout_8.addItem(self.horizontalSpacer_3)
-
+        self.horizontalLayout_8.setContentsMargins(5, 0, 5, 5)
         self.label_7 = QLabel(self.reprint_frame)
         self.label_7.setObjectName(u"label_7")
         self.label_7.setMinimumSize(QSize(0, 27))
+        self.label_7.setMaximumSize(QSize(100, 16777215))
         self.label_7.setFont(font)
 
-        self.horizontalLayout_8.addWidget(self.label_7)
+        self.horizontalLayout_8.addWidget(self.label_7, 0, Qt.AlignVCenter)
 
         self.reasons_combo_box = QComboBox(self.reprint_frame)
         self.reasons_combo_box.addItem("")
@@ -450,17 +447,48 @@ class Ui_MainWindow(object):
         self.reasons_combo_box.addItem("")
         self.reasons_combo_box.addItem("")
         self.reasons_combo_box.addItem("")
+        self.reasons_combo_box.addItem("")
         self.reasons_combo_box.setObjectName(u"reasons_combo_box")
         self.reasons_combo_box.setMinimumSize(QSize(250, 0))
+        self.reasons_combo_box.setMaximumSize(QSize(20, 16777215))
         self.reasons_combo_box.setStyleSheet(u"background-color: rgb( 57, 123, 201);\n"
 "border: 2px solid rgb( 57, 123, 201);\n"
 "border-radius: 10px;")
 
         self.horizontalLayout_8.addWidget(self.reasons_combo_box)
 
-        self.horizontalSpacer_5 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.horizontalSpacer_3 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
-        self.horizontalLayout_8.addItem(self.horizontalSpacer_5)
+        self.horizontalLayout_8.addItem(self.horizontalSpacer_3)
+
+        self.label_8 = QLabel(self.reprint_frame)
+        self.label_8.setObjectName(u"label_8")
+        self.label_8.setMinimumSize(QSize(0, 27))
+        self.label_8.setFont(font)
+
+        self.horizontalLayout_8.addWidget(self.label_8, 0, Qt.AlignVCenter)
+
+        self.complement_id_combo_box = QComboBox(self.reprint_frame)
+        self.complement_id_combo_box.addItem("")
+        self.complement_id_combo_box.addItem("")
+        self.complement_id_combo_box.addItem("")
+        self.complement_id_combo_box.addItem("")
+        self.complement_id_combo_box.addItem("")
+        self.complement_id_combo_box.addItem("")
+        self.complement_id_combo_box.addItem("")
+        self.complement_id_combo_box.addItem("")
+        self.complement_id_combo_box.addItem("")
+        self.complement_id_combo_box.addItem("")
+        self.complement_id_combo_box.addItem("")
+        self.complement_id_combo_box.setObjectName(u"complement_id_combo_box")
+        self.complement_id_combo_box.setEnabled(False)
+        self.complement_id_combo_box.setMinimumSize(QSize(100, 0))
+        self.complement_id_combo_box.setMaximumSize(QSize(50, 16777215))
+        self.complement_id_combo_box.setStyleSheet(u"background-color: rgb( 57, 123, 201);\n"
+"border: 2px solid rgb( 57, 123, 201);\n"
+"border-radius: 10px;")
+
+        self.horizontalLayout_8.addWidget(self.complement_id_combo_box)
 
 
         self.verticalLayout_3.addWidget(self.reprint_frame)
@@ -531,16 +559,30 @@ class Ui_MainWindow(object):
 #if QT_CONFIG(shortcut)
         self.increment_button.setShortcut(QCoreApplication.translate("MainWindow", u"+, =", None))
 #endif // QT_CONFIG(shortcut)
-        self.label_7.setText(QCoreApplication.translate("MainWindow", u"REIMPRESS\u00c3O POR:", None))
+        self.label_7.setText(QCoreApplication.translate("MainWindow", u"MOTIVO:", None))
         self.reasons_combo_box.setItemText(0, QCoreApplication.translate("MainWindow", u"Selecione", None))
-        self.reasons_combo_box.setItemText(1, QCoreApplication.translate("MainWindow", u"Falha na impressora", None))
-        self.reasons_combo_box.setItemText(2, QCoreApplication.translate("MainWindow", u"Impressora sem etiqueta", None))
-        self.reasons_combo_box.setItemText(3, QCoreApplication.translate("MainWindow", u"Impressora sem tinta (Ribbon)", None))
-        self.reasons_combo_box.setItemText(4, QCoreApplication.translate("MainWindow", u"N\u00famero de volumes incorreto", None))
-        self.reasons_combo_box.setItemText(5, QCoreApplication.translate("MainWindow", u"Etiqueta perdida", None))
-        self.reasons_combo_box.setItemText(6, QCoreApplication.translate("MainWindow", u"Etiqueta danificada", None))
-        self.reasons_combo_box.setItemText(7, QCoreApplication.translate("MainWindow", u"Impresso anteriormente por engano", None))
-        self.reasons_combo_box.setItemText(8, QCoreApplication.translate("MainWindow", u"Pedido anteriormente cancelado", None))
+        self.reasons_combo_box.setItemText(1, QCoreApplication.translate("MainWindow", u"Pedido complementar/parcial", None))
+        self.reasons_combo_box.setItemText(2, QCoreApplication.translate("MainWindow", u"Falha na impressora", None))
+        self.reasons_combo_box.setItemText(3, QCoreApplication.translate("MainWindow", u"Impressora sem etiqueta", None))
+        self.reasons_combo_box.setItemText(4, QCoreApplication.translate("MainWindow", u"Impressora sem tinta (Ribbon)", None))
+        self.reasons_combo_box.setItemText(5, QCoreApplication.translate("MainWindow", u"N\u00famero de volumes incorreto", None))
+        self.reasons_combo_box.setItemText(6, QCoreApplication.translate("MainWindow", u"Etiqueta perdida", None))
+        self.reasons_combo_box.setItemText(7, QCoreApplication.translate("MainWindow", u"Etiqueta danificada", None))
+        self.reasons_combo_box.setItemText(8, QCoreApplication.translate("MainWindow", u"Impresso anteriormente por engano", None))
+        self.reasons_combo_box.setItemText(9, QCoreApplication.translate("MainWindow", u"Pedido anteriormente cancelado", None))
+
+        self.label_8.setText(QCoreApplication.translate("MainWindow", u"COMPLEMENTO:", None))
+        self.complement_id_combo_box.setItemText(0, QCoreApplication.translate("MainWindow", u"Selecione", None))
+        self.complement_id_combo_box.setItemText(1, QCoreApplication.translate("MainWindow", u"1", None))
+        self.complement_id_combo_box.setItemText(2, QCoreApplication.translate("MainWindow", u"2", None))
+        self.complement_id_combo_box.setItemText(3, QCoreApplication.translate("MainWindow", u"3", None))
+        self.complement_id_combo_box.setItemText(4, QCoreApplication.translate("MainWindow", u"4", None))
+        self.complement_id_combo_box.setItemText(5, QCoreApplication.translate("MainWindow", u"5", None))
+        self.complement_id_combo_box.setItemText(6, QCoreApplication.translate("MainWindow", u"6", None))
+        self.complement_id_combo_box.setItemText(7, QCoreApplication.translate("MainWindow", u"7", None))
+        self.complement_id_combo_box.setItemText(8, QCoreApplication.translate("MainWindow", u"8", None))
+        self.complement_id_combo_box.setItemText(9, QCoreApplication.translate("MainWindow", u"9", None))
+        self.complement_id_combo_box.setItemText(10, QCoreApplication.translate("MainWindow", u"10", None))
 
         self.quantity_label.setText(QCoreApplication.translate("MainWindow", u"VOLUME \u00daNICO", None))
     # retranslateUi
