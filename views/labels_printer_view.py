@@ -58,6 +58,7 @@ class LabelsPrinterView(QMainWindow):
         self.ui.reasons_combo_box.currentTextChanged.connect(self.manage_complement_combo_box)
         self.ui.complement_id_combo_box.currentTextChanged.connect(self.manage_print_button)
         self.ui.label_quantity_display.textEdited.connect(self.validate_quantity_input)
+        self.ui.label_quantity_display.textEdited.connect(self.change_quantity_label)
 
     def eventFilter(self, widget, event):
         if event.type() == QtCore.QEvent.KeyPress:
