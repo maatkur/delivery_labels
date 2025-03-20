@@ -1,9 +1,11 @@
+# tasks.py
 from invoke import task
 import os
 
 
 @task
 def deploy(ctx):
+    # Volta a rodar de dentro de deploy/
     ctx.run("cd deploy && python deploy.py")
 
     dist_path = os.path.abspath("deploy/dist")
