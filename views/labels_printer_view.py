@@ -1,3 +1,5 @@
+from typing import Optional
+
 from PySide6 import QtCore
 from PySide6.QtWidgets import *
 
@@ -5,14 +7,14 @@ from components.dialog_window.dialog_window_manager import DialogWindowManager
 from database.repositories.repository_manager import RepositoryManager
 from helpers import SessionHelper
 from helpers import WidgetHelper
-from helpers.query_helper import QueryHelper
 from helpers.date_helper import DateHelper
+from helpers.query_helper import QueryHelper
 from helpers.sanitize_str_helper import SanitizeStrHelper
+from printer.printer import Printer
 from ui import LabelPrinterWindow
 from views.labels_report_view import PrintedLabelsView
-from views.users_management_view import UsersManagementView
 from views.password_chage_view import ChangePasswordView
-from printer.printer import Printer
+from views.users_management_view import UsersManagementView
 
 
 class LabelsPrinterView(QMainWindow):
@@ -59,6 +61,8 @@ class LabelsPrinterView(QMainWindow):
         self.ui.complement_id_combo_box.currentTextChanged.connect(self.manage_print_button)
         self.ui.label_quantity_display.textEdited.connect(self.validate_quantity_input)
         self.ui.label_quantity_display.textEdited.connect(self.change_quantity_label)
+        self.ui.reasons_combo_box.currentTextChanged.connect(self.manage_interval_entry)
+        self.ui.interval_entry.textChanged.connect(self.validate_interval_input)
 
     def eventFilter(self, widget, event):
         if event.type() == QtCore.QEvent.KeyPress:
@@ -260,6 +264,60 @@ class LabelsPrinterView(QMainWindow):
 
         self.ui.clear_button.setEnabled(can_enable_clear_button)
 
+    def manage_interval_entry(self) -> None:
+        """
+        Habilita o campo de entrada de intervalo se o motivo da reimpressão for válido.
+        """
+
+        self.ui.interval_entry.setText("")  # Limpa o campo de entrada de intervalo
+
+        can_enable_interval_entry = self.ui.reasons_combo_box.currentText() in [
+            "Falha na impressora",
+            "Impressora sem etiqueta",
+            "Impressora sem tinta (Ribbon)"  # Corrigido
+        ]
+
+        self.ui.interval_entry.setEnabled(can_enable_interval_entry)
+
+    def validate_interval_input(self, text: str) -> None:
+        """Valida o input do interval_entry no formato 'inicio;fim'."""
+        if not text:
+            self.ui.interval_entry.setStyleSheet(
+                "background-color: rgb(57, 123, 201); border: 2px solid rgb(57, 123, 201); border-radius: 10px;")
+            return
+
+        try:
+            start, end = map(int, text.split(";"))
+            max_volumes = RepositoryManager.printer_logs_repository().verify_reprint_volumes(self.ui.order_entry.text())
+            if max_volumes is None:
+                raise ValueError("Ordem não encontrada ou sem impressão anterior")
+            if start < 1 or end > max_volumes or start > end:
+                raise ValueError("Intervalo inválido")
+            self.ui.interval_entry.setStyleSheet(
+                "background-color: rgb(57, 123, 201); border: 2px solid rgb(57, 123, 201); border-radius: 10px;")
+        except ValueError:
+            self.ui.interval_entry.setStyleSheet(
+                "background-color: rgb(255, 100, 100); border: 2px solid rgb(255, 100, 100); border-radius: 10px;")
+            self.ui.print_button.setEnabled(False)
+
+    def get_interval(self) -> Optional[tuple[int, int]]:
+        """Retorna o intervalo do interval_entry ou None se vazio."""
+        text = self.ui.interval_entry.text()
+        if not text:
+            return None
+        try:
+            start, end = map(int, text.split(";"))
+            max_volumes = RepositoryManager.printer_logs_repository().verify_reprint_volumes(self.ui.order_entry.text())
+            if max_volumes is None:
+                raise ValueError("Ordem não encontrada ou sem impressão anterior")
+            if 1 <= start <= end <= max_volumes:
+                return start, end
+            else:
+                raise ValueError("Intervalo fora dos limites")
+        except ValueError:
+            DialogWindowManager.dialog().error("Intervalo inválido! Use o formato 'inicio;fim' (ex.: 7;10).")
+            return None
+
     def handle_users_management_button(self) -> None:
         self.users_management_window = UsersManagementView()
         self.users_management_window.setWindowModality(QtCore.Qt.ApplicationModal)  # Definindo como modal
@@ -271,8 +329,8 @@ class LabelsPrinterView(QMainWindow):
         self.printed_labels_window.show()
 
     def handle_print_button(self) -> None:
-
         order_number = self.ui.order_entry.text()
+        interval = self.get_interval()  # Pega o intervalo do interval_entry
 
         label = {
             "customer": self.order_data["nome"],
@@ -282,7 +340,8 @@ class LabelsPrinterView(QMainWindow):
             "volumes": int(self.ui.label_quantity_display.text()),
             "order_id": order_number,
             "is_reprint": False,
-            "reprint_reason": None
+            "reprint_reason": None,
+            "interval": interval  # Adiciona o intervalo (tupla ou None)
         }
 
         if self.reprint_frame_activated:
@@ -293,9 +352,7 @@ class LabelsPrinterView(QMainWindow):
             label["order_id"] = label["order_id"] + rf"/{self.ui.complement_id_combo_box.currentText()}"
 
         Printer.print_label(label)
-
         RepositoryManager.printer_logs_repository().create_printer_log(label)
-
         self.new_search()
 
     def manage_print_permissions(self) -> None:

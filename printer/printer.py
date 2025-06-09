@@ -1,4 +1,3 @@
-# printer/printer.py
 import win32print
 from .layout import Layout
 from components.dialog_window.dialog_window_manager import DialogWindowManager
@@ -21,13 +20,22 @@ class Printer:
 
     @staticmethod
     def print_label(label_data: dict) -> None:
-        """Gera e imprime etiquetas para cada volume na Zebra.
+        """Gera e imprime etiquetas para o intervalo especificado ou todos os volumes.
 
         Args:
-            label_data (dict): Dados da etiqueta (ex.: {'volumes': ..., 'customer': ..., ...}).
+            label_data (dict): Dados da etiqueta, incluindo 'volumes' e opcionalmente 'interval'.
         """
         zpl_content = ""
-        for current_label in range(1, label_data["volumes"] + 1):
+        interval = label_data.get("interval")
+        if interval:
+            start, end = interval
+            if start < 1 or end > label_data["volumes"] or start > end:
+                DialogWindowManager.dialog().error("Intervalo inválido para impressão!")
+                return
+        else:
+            start, end = 1, label_data["volumes"]
+
+        for current_label in range(start, end + 1):
             label_data["current_label"] = current_label
             zpl = Layout.generate_label(label_data)
             zpl_content += zpl

@@ -426,16 +426,15 @@ class Ui_MainWindow(object):
         self.reprint_frame.setFrameShape(QFrame.StyledPanel)
         self.reprint_frame.setFrameShadow(QFrame.Raised)
         self.horizontalLayout_8 = QHBoxLayout(self.reprint_frame)
-        self.horizontalLayout_8.setSpacing(0)
         self.horizontalLayout_8.setObjectName(u"horizontalLayout_8")
-        self.horizontalLayout_8.setContentsMargins(5, 0, 5, 5)
+        self.horizontalLayout_8.setContentsMargins(0, 0, 0, 0)
         self.label_7 = QLabel(self.reprint_frame)
         self.label_7.setObjectName(u"label_7")
         self.label_7.setMinimumSize(QSize(0, 27))
         self.label_7.setMaximumSize(QSize(100, 16777215))
         self.label_7.setFont(font)
 
-        self.horizontalLayout_8.addWidget(self.label_7, 0, Qt.AlignVCenter)
+        self.horizontalLayout_8.addWidget(self.label_7)
 
         self.reasons_combo_box = QComboBox(self.reprint_frame)
         self.reasons_combo_box.addItem("")
@@ -449,7 +448,7 @@ class Ui_MainWindow(object):
         self.reasons_combo_box.addItem("")
         self.reasons_combo_box.addItem("")
         self.reasons_combo_box.setObjectName(u"reasons_combo_box")
-        self.reasons_combo_box.setMinimumSize(QSize(250, 0))
+        self.reasons_combo_box.setMinimumSize(QSize(211, 0))
         self.reasons_combo_box.setMaximumSize(QSize(20, 16777215))
         self.reasons_combo_box.setStyleSheet(u"background-color: rgb( 57, 123, 201);\n"
 "border: 2px solid rgb( 57, 123, 201);\n"
@@ -466,7 +465,7 @@ class Ui_MainWindow(object):
         self.label_8.setMinimumSize(QSize(0, 27))
         self.label_8.setFont(font)
 
-        self.horizontalLayout_8.addWidget(self.label_8, 0, Qt.AlignVCenter)
+        self.horizontalLayout_8.addWidget(self.label_8)
 
         self.complement_id_combo_box = QComboBox(self.reprint_frame)
         self.complement_id_combo_box.addItem("")
@@ -489,6 +488,16 @@ class Ui_MainWindow(object):
 "border-radius: 10px;")
 
         self.horizontalLayout_8.addWidget(self.complement_id_combo_box)
+
+        self.interval_entry = QLineEdit(self.reprint_frame)
+        self.interval_entry.setObjectName(u"interval_entry")
+        self.interval_entry.setEnabled(False)
+        self.interval_entry.setStyleSheet(u"background-color: rgb( 57, 123, 201);\n"
+"border: 2px solid rgb( 57, 123, 201);\n"
+"border-radius: 10px;")
+        self.interval_entry.setAlignment(Qt.AlignCenter)
+
+        self.horizontalLayout_8.addWidget(self.interval_entry)
 
 
         self.verticalLayout_3.addWidget(self.reprint_frame)
@@ -571,7 +580,7 @@ class Ui_MainWindow(object):
         self.reasons_combo_box.setItemText(8, QCoreApplication.translate("MainWindow", u"Impresso anteriormente por engano", None))
         self.reasons_combo_box.setItemText(9, QCoreApplication.translate("MainWindow", u"Pedido anteriormente cancelado", None))
 
-        self.label_8.setText(QCoreApplication.translate("MainWindow", u"COMPLEMENTO:", None))
+        self.label_8.setText(QCoreApplication.translate("MainWindow", u"COMPL:", None))
         self.complement_id_combo_box.setItemText(0, QCoreApplication.translate("MainWindow", u"Selecione", None))
         self.complement_id_combo_box.setItemText(1, QCoreApplication.translate("MainWindow", u"1", None))
         self.complement_id_combo_box.setItemText(2, QCoreApplication.translate("MainWindow", u"2", None))
@@ -584,6 +593,7 @@ class Ui_MainWindow(object):
         self.complement_id_combo_box.setItemText(9, QCoreApplication.translate("MainWindow", u"9", None))
         self.complement_id_combo_box.setItemText(10, QCoreApplication.translate("MainWindow", u"10", None))
 
+        self.interval_entry.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Intervalo", None))
         self.quantity_label.setText(QCoreApplication.translate("MainWindow", u"VOLUME \u00daNICO", None))
     # retranslateUi
 
