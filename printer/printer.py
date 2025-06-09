@@ -1,6 +1,7 @@
 import win32print
 from .layout import Layout
 from components.dialog_window.dialog_window_manager import DialogWindowManager
+from database.repositories import RepositoryManager
 
 
 class Printer:
@@ -49,6 +50,12 @@ class Printer:
                 win32print.WritePrinter(hPrinter, zpl_content.encode("utf-8"))
                 win32print.EndPagePrinter(hPrinter)
                 win32print.EndDocPrinter(hPrinter)
+                # Adiciona intervalo ao log como string
+                log_data = label_data.copy()
+                if interval and log_data["is_reprint"]:
+                    log_data[
+                        "reprint_reason"] = f"{log_data['reprint_reason']} (intervalo: {interval[0]};{interval[1]})"
+                RepositoryManager.printer_logs_repository().create_printer_log(log_data)
             finally:
                 win32print.ClosePrinter(hPrinter)
         except Exception as e:

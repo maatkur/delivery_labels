@@ -123,7 +123,7 @@ class LabelsPrinterView(QMainWindow):
     def change_quantity_display(self, value) -> None:
         volume = int(self.ui.label_quantity_display.text() or "1")  # Default 1 se vazio
         volume += value
-        if 1 <= volume <= 36:
+        if 1 <= volume <= 100:
             self.ui.label_quantity_display.setText(f"{volume}")
 
     def validate_quantity_input(self, text: str) -> None:
@@ -137,7 +137,7 @@ class LabelsPrinterView(QMainWindow):
             # Corrige se fora do limite
             if volume < 1:
                 self.ui.label_quantity_display.setText("1")
-            elif volume > 36:
+            elif volume > 100:
                 self.ui.label_quantity_display.setText("1")
         except ValueError:
             # Se não for número, volta pro último valor válido ou 1
@@ -168,10 +168,13 @@ class LabelsPrinterView(QMainWindow):
 
     def search_order(self) -> None:
         order_number = self.ui.order_entry.text()
-
         self.order_data = QueryHelper.query_response(order_number)
-
         if self.order_data:
+            volumes = RepositoryManager.printer_logs_repository().verify_reprint_volumes(order_number)
+            if volumes is not None:
+                self.ui.label_quantity_display.setText(str(volumes))
+            else:
+                self.ui.label_quantity_display.setText("1")  # Padrão para ordens novas
             self.manage_print_permissions()
         else:
             DialogWindowManager.dialog().search_error()
@@ -298,7 +301,7 @@ class LabelsPrinterView(QMainWindow):
         except ValueError:
             self.ui.interval_entry.setStyleSheet(
                 "background-color: rgb(255, 100, 100); border: 2px solid rgb(255, 100, 100); border-radius: 10px;")
-            self.ui.print_button.setEnabled(False)
+
 
     def get_interval(self) -> Optional[tuple[int, int]]:
         """Retorna o intervalo do interval_entry ou None se vazio."""
@@ -332,16 +335,31 @@ class LabelsPrinterView(QMainWindow):
         order_number = self.ui.order_entry.text()
         interval = self.get_interval()  # Pega o intervalo do interval_entry
 
+        # Define volumes com base no motivo e intervalo
+        if self.reprint_frame_activated and interval and self.ui.reasons_combo_box.currentText() in [
+            "Falha na impressora",
+            "Impressora sem etiqueta",
+            "Impressora sem tinta (Ribbon)"
+        ]:
+            # Usa verify_reprint_volumes pra reimpressões com intervalo
+            volumes = RepositoryManager.printer_logs_repository().verify_reprint_volumes(order_number)
+            if volumes is None:
+                DialogWindowManager.dialog().error("Ordem não encontrada no histórico para reimpressão com intervalo!")
+                return
+        else:
+            # Usa label_quantity_display pra ordens novas ou reimpressões sem intervalo
+            volumes = int(self.ui.label_quantity_display.text() or "1")
+
         label = {
             "customer": self.order_data["nome"],
             "store": self.ui.service_store_field.text(),
             "date": self.ui.label_date_field.text(),
             "user_id": self.ui.checker_field.text(),
-            "volumes": int(self.ui.label_quantity_display.text()),
+            "volumes": volumes,
             "order_id": order_number,
             "is_reprint": False,
             "reprint_reason": None,
-            "interval": interval  # Adiciona o intervalo (tupla ou None)
+            "interval": interval
         }
 
         if self.reprint_frame_activated:
@@ -352,7 +370,6 @@ class LabelsPrinterView(QMainWindow):
             label["order_id"] = label["order_id"] + rf"/{self.ui.complement_id_combo_box.currentText()}"
 
         Printer.print_label(label)
-        RepositoryManager.printer_logs_repository().create_printer_log(label)
         self.new_search()
 
     def manage_print_permissions(self) -> None:
