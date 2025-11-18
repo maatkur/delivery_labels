@@ -10,7 +10,6 @@ from helpers import WidgetHelper
 from helpers.date_helper import DateHelper
 from helpers.query_helper import QueryHelper
 from helpers.sanitize_str_helper import SanitizeStrHelper
-from printer.printer import Printer
 from ui import LabelPrinterWindow
 from views.labels_report_view import PrintedLabelsView
 from views.password_chage_view import ChangePasswordView
@@ -91,10 +90,10 @@ class LabelsPrinterView(QMainWindow):
             self.new_search()
         if widget == self.ui.search_button:
             self.search_order()
-        if "MANAGE USERS" in self.user["permissions"]:
+        if "MANAGE USERS" in self.user.permissions:
             if widget == self.ui.users_menu_button:
                 self.handle_users_management_button()
-        if "REPORT" in self.user["permissions"]:
+        if "REPORT" in self.user.permissions:
             if widget == self.ui.reports_button:
                 self.handle_report_button()
 
@@ -187,11 +186,11 @@ class LabelsPrinterView(QMainWindow):
             SanitizeStrHelper.sanitize_str(self.order_data["loja"])
         )
         self.ui.label_date_field.setText(DateHelper.get_current_date())
-        self.ui.checker_field.setText(f'{self.user["user_id"]}')
+        self.ui.checker_field.setText(f'{self.user.id}')
 
     def show_logged_user(self) -> None:
 
-        self.ui.logged_user_label.setText(f"{self.user['user_id']}-{self.user['name']}")
+        self.ui.logged_user_label.setText(f"{self.user.id}-{self.user.name}")
 
     def disable_search_field(self) -> None:
         self.ui.order_entry.setDisabled(True)
@@ -221,13 +220,13 @@ class LabelsPrinterView(QMainWindow):
         WidgetHelper.enable_widget(widgets)
 
     def manage_users_management_button(self) -> None:
-        if "MANAGE USERS" in self.user["permissions"]:
+        if "MANAGE USERS" in self.user.permissions:
             WidgetHelper.enable_widget(self.ui.users_menu_button)
         else:
             WidgetHelper.disable_widget(self.ui.users_menu_button)
 
     def manage_report_button(self) -> None:
-        can_access_reports = "REPORT" in self.user["permissions"]
+        can_access_reports = "REPORT" in self.user.permissions
 
         self.ui.reports_button.setEnabled(can_access_reports)
 
@@ -368,8 +367,20 @@ class LabelsPrinterView(QMainWindow):
 
         if label["reprint_reason"] == "Pedido complementar/parcial":
             label["order_id"] = label["order_id"] + rf"/{self.ui.complement_id_combo_box.currentText()}"
+        
+        log_data = label.copy()
+        
+        for i in range(label["volumes"]):
+            label["current_label"] = i + 1
+            print(label)
+            print("--------------------------------")
+        if interval and log_data["is_reprint"]:
+                log_data[
+                        "reprint_reason"] = f"{log_data['reprint_reason']} (intervalo: {interval[0]};{interval[1]})"
+                RepositoryManager.printer_logs_repository().create_printer_log(log_data)
 
-        Printer.print_label(label)
+        #Printer.print_label(label)
+        
         self.new_search()
 
     def manage_print_permissions(self) -> None:
@@ -379,7 +390,7 @@ class LabelsPrinterView(QMainWindow):
         self.disable_search_field()
 
         if printed:
-            if "REPRINT LABELS" in self.user["permissions"]:
+            if "REPRINT LABELS" in self.user.permissions:
                 self.activate_reprint_frame()
                 self.load_label_data()
             else:

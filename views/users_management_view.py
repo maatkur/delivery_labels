@@ -249,7 +249,7 @@ class UsersManagementView(QMainWindow):
         self.ui.tableWidget.horizontalHeader().resizeSection(3, 79)
 
     def admin_secrets(self):
-        if self.user["user_id"] == 999:
+        if self.user.id == 999:
             # Libera o tamanho máximo da janela
             self.setMaximumSize(QSize(16777215, 16777215))  # Valor máximo do Qt
         else:

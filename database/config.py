@@ -6,8 +6,8 @@ from sqlalchemy.orm import sessionmaker
 from contextlib import contextmanager
 
 # URL do banco de dados (no caso, SQLite)
-# DATABASE_URL = r"sqlite:///C:/Users/mathe/PycharmProjects/delivery_labels/delivery_labels.db"
-DATABASE_URL = r"sqlite:///F:/esmcun/delivery_labels.db"
+DATABASE_URL = r"sqlite:///C:/Users/matheus/PycharmProjects/delivery_labels/delivery_labels.db"
+# DATABASE_URL = r"sqlite:///F:/esmcun/delivery_labels.db"
 
 # Criação do engine e da sessão
 engine = create_engine(DATABASE_URL, echo=False)

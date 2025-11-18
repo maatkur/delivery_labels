@@ -2,7 +2,7 @@ from PySide6 import QtCore
 from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import *
 
-from authenticator import Authenticator
+from infrastructure.authenticator import Authenticator
 from components.dialog_window.dialog_window_manager import DialogWindowManager
 from database.repositories.repository_manager import RepositoryManager
 from helpers import SessionHelper, WidgetHelper, EncryptHelper
@@ -89,7 +89,7 @@ class ChangePasswordView(QMainWindow):
 
         status, credentials = Authenticator.authenticate(
             {
-                "user_id": self.user["user_id"],
+                "user_id": self.user.id,
                 "password": self.ui.current_password_input.text()
             }
         )
@@ -129,7 +129,7 @@ class ChangePasswordView(QMainWindow):
         new_password = self.ui.new_password_input.text()
         RepositoryManager.users_repository().update_user(
             {
-                "id": self.user["user_id"],
+                "id": self.user.id,
                 "password": EncryptHelper.encrypt_password(new_password)
             }
         )

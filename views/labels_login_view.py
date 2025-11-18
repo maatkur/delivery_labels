@@ -1,11 +1,13 @@
 from PySide6 import QtCore
 from PySide6.QtWidgets import *
 
-from authenticator.authenticator import Authenticator
+from infrastructure.authenticator.authenticator import Authenticator
 from components import DialogWindowManager
 from helpers import WidgetHelper, SessionHelper
 from ui import LoginWindow
 from views.labels_printer_view import LabelsPrinterView
+
+from core.router import AppRouter
 
 
 class LabelsLoginView(QMainWindow):
@@ -21,7 +23,7 @@ class LabelsLoginView(QMainWindow):
         ])
         WidgetHelper.disable_widget(self.ui.login_button)
         self.connect_widget_actions()
-        self.labels_printer_window = None
+        self.initial_window = None
 
     def eventFilter(self, widget, event):
         if event.type() == QtCore.QEvent.KeyPress:
@@ -51,19 +53,17 @@ class LabelsLoginView(QMainWindow):
         self.ui.password_entry.textChanged.connect(self.manage_login_button)
 
     def login(self) -> None:
-        user = {
-            "user_id": self.ui.user_entry.text(),
-            "password": self.ui.password_entry.text()
-        }
-        try:
-            login_status, authenticated_user = Authenticator.authenticate(user)
-            if login_status.get("status") == "success":
-                # Usando a instância singleton do SessionHelper
-                session = SessionHelper()
-                session.set("user", authenticated_user.get("credentials"))
+        user_id = self.ui.user_entry.text()
+        password = self.ui.password_entry.text()
 
-                self.labels_printer_window = LabelsPrinterView()
-                self.labels_printer_window.show()
+        try:
+            login_status, authenticated_user = Authenticator.authenticate(user_id, password)
+            if login_status.get("status") == "success":
+                session = SessionHelper()
+                session.set_current_user(authenticated_user)
+
+                self.initial_window = AppRouter.open_initial_screen(authenticated_user)
+                self.initial_window.show()
 
                 self.close()
             else:
