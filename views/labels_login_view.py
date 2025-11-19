@@ -5,7 +5,6 @@ from infrastructure.authenticator.authenticator import Authenticator
 from components import DialogWindowManager
 from helpers import WidgetHelper, SessionHelper
 from ui import LoginWindow
-from views.labels_printer_view import LabelsPrinterView
 
 from core.router import AppRouter
 

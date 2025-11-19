@@ -7,8 +7,8 @@ class AppRouter:
         perms = user.permissions
 
         if "COATING LABELS" in perms:
-            from views.password_chage_view import ChangePasswordView
-            return ChangePasswordView()
+            from views.coating_labels_printer_view import CoatingLabelsPrinterView
+            return CoatingLabelsPrinterView()
 
         from views.labels_printer_view import LabelsPrinterView
         return LabelsPrinterView()
